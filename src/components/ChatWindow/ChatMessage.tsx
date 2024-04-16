@@ -8,7 +8,7 @@ interface ChatMessageProps {
 export default function ChatMessage({ isSender, children }: ChatMessageProps) {
     return (
         <Card asChild>
-            <Box width="fit-content" ml={isSender ? "auto" : "0"}>
+            <Box width="fit-content" maxWidth="80%" ml={isSender ? "auto" : "0"}>
                 <Text>{children}</Text>
             </Box>
         </Card>
