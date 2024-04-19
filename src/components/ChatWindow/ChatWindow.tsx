@@ -1,11 +1,13 @@
 import { PaperPlaneIcon } from "@radix-ui/react-icons";
-import { Box, Flex, Heading, IconButton, ScrollArea, TextArea } from "@radix-ui/themes";
+import { Box, Flex, Grid, Heading, IconButton, ScrollArea, SegmentedControl, TextArea } from "@radix-ui/themes";
 import { nanoid } from "nanoid";
 import OpenAI from "openai";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { useUseChatsStore } from "@/stores/userChats";
 import { useUserSettingsStore } from "@/stores/userSettings";
+import { Model } from "@/types/chat";
 
 import ChatMessageContainer from "./ChatMessageContainer";
 
@@ -14,12 +16,22 @@ interface FormData {
 }
 
 export default function ChatWindow() {
+    const [chatModel, setChatModel] = useState<Model>(Model.GPT35TURBO);
+
     const { register, handleSubmit, reset } = useForm<FormData>();
 
     const openAIApiKey = useUserSettingsStore((state) => state.openAIApiKey);
     const { chats, activeChatId, addChat, updateChat, setActiveChatId } = useUseChatsStore();
 
     const activeChat = chats.find((chat) => chat.id === activeChatId);
+
+    useEffect(() => {
+        if (activeChat) {
+            setChatModel(activeChat.model);
+        } else {
+            setChatModel(Model.GPT35TURBO);
+        }
+    }, [activeChat]);
 
     const openai = new OpenAI({
         apiKey: openAIApiKey,
@@ -41,7 +53,7 @@ export default function ChatWindow() {
             ) ?? [];
 
         const chatCompletion = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: chatModel,
             messages: [...prevMessages, { role: "user", content: data.message }]
         });
 
@@ -59,7 +71,7 @@ export default function ChatWindow() {
             addChat({
                 id: newId,
                 title: "New Chat",
-                model: "gpt-3.5-turbo",
+                model: chatModel,
                 messages: [
                     { text: data.message, userMessage: true },
                     { text: chatCompletion.choices[0].message.content ?? "", userMessage: false }
@@ -71,7 +83,14 @@ export default function ChatWindow() {
 
     return (
         <Flex direction="column" mx="4" align="center" justify="center" width="100%">
-            <Heading>{activeChat?.title ?? "Start a new conversation"}</Heading>
+            <Grid columns="1fr 3fr 1fr" width="100%" justify="center" align="center">
+                <SegmentedControl.Root value={chatModel} onValueChange={(value: Model) => setChatModel(value)}>
+                    <SegmentedControl.Item value={Model.GPT35TURBO}>GPT-3.5</SegmentedControl.Item>
+                    <SegmentedControl.Item value={Model.GPT4}>GPT-4</SegmentedControl.Item>
+                </SegmentedControl.Root>
+
+                <Heading align="center">{activeChat?.title ?? "Start a new conversation"}</Heading>
+            </Grid>
             <ScrollArea type="auto" scrollbars="vertical">
                 <Flex direction="column" gap="4" mx="8">
                     {activeChat?.messages.map((chatMessage, index) => (

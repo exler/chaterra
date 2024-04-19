@@ -3,7 +3,10 @@ export interface ChatMessage {
     userMessage: boolean;
 }
 
-export type Model = "gpt-3.5-turbo" | "gpt-4";
+export enum Model {
+    GPT35TURBO = "gpt-3.5-turbo",
+    GPT4 = "gpt-4"
+}
 
 export interface Chat {
     id: string;
