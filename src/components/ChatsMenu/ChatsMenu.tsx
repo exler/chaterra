@@ -5,7 +5,7 @@ import SiteLogo from "@/assets/logo.png";
 
 export default function ChatsMenu() {
     return (
-        <Flex my="4" direction="column">
+        <Flex direction="column">
             <Box mx="auto">
                 <img src={SiteLogo} alt="Chaterra" height={50} width={160} />
             </Box>

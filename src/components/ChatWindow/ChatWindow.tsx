@@ -3,6 +3,8 @@ import { Box, Flex, Heading, IconButton, ScrollArea, TextArea } from "@radix-ui/
 import OpenAI from "openai";
 import { useState } from "react";
 
+import { useUserSettingsStore } from "@/stores/userSettings";
+
 import ChatMessage from "./ChatMessage";
 
 interface ChatMessage {
@@ -15,8 +17,10 @@ export default function ChatWindow() {
     const [chatInput, setChatInput] = useState<string>("");
     const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
+    const openAIApiKey = useUserSettingsStore((state) => state.openAIApiKey);
+
     const openai = new OpenAI({
-        apiKey: "not-set",
+        apiKey: openAIApiKey,
         dangerouslyAllowBrowser: true
     });
 
@@ -44,7 +48,7 @@ export default function ChatWindow() {
     };
 
     return (
-        <Flex direction="column" mx="4" my="4" align="center" justify="center" width="100%">
+        <Flex direction="column" mx="4" align="center" justify="center" width="100%">
             <Heading>{chatTitle}</Heading>
             <ScrollArea type="auto" scrollbars="vertical">
                 <Flex direction="column" gap="4" mx="8">

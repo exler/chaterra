@@ -11,7 +11,7 @@ export default function Root() {
         <Theme appearance="dark">
             <Flex height="100dvh" gap="4">
                 <MenuBar />
-                <Box height="100%" width="100%">
+                <Box height="100%" width="100%" my="4">
                     <Outlet />
                 </Box>
             </Flex>

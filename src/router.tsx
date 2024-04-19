@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Root from "@/components/Root/Root";
 import Chat from "@/routes/Chat";
+import Settings from "@/routes/Settings";
 
 const router = createBrowserRouter([
     {
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Chat />
+            },
+            {
+                path: "/settings",
+                element: <Settings />
             }
         ]
     }
