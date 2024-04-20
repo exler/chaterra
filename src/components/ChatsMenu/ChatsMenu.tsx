@@ -1,11 +1,19 @@
 import { CrossCircledIcon, MagnifyingGlassIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { Box, Card, Flex, IconButton, Text, TextField } from "@radix-ui/themes";
+import { useForm } from "react-hook-form";
 
 import SiteLogo from "@/assets/logo.png";
 import { useUseChatsStore } from "@/stores/userChats";
 
+interface FormData {
+    searchInput: string;
+}
+
 export default function ChatsMenu() {
+    const { register, watch } = useForm<FormData>();
     const { chats, setActiveChatId, removeChat } = useUseChatsStore();
+
+    const searchInput = watch("searchInput");
 
     return (
         <Flex direction="column">
@@ -14,7 +22,7 @@ export default function ChatsMenu() {
             </Box>
             <Flex>
                 <Box width="100%" asChild>
-                    <TextField.Root placeholder="Search your chats...">
+                    <TextField.Root placeholder="Search your chats..." {...register("searchInput")}>
                         <TextField.Slot>
                             <MagnifyingGlassIcon height="16" width="16" />
                         </TextField.Slot>
@@ -25,16 +33,22 @@ export default function ChatsMenu() {
                 </IconButton>
             </Flex>
             <Flex direction="column" mt="2" gap="2">
-                {chats.map((chat) => (
-                    <Card key={chat.id} onClick={() => setActiveChatId(chat.id)}>
-                        <Flex align="center" justify="between">
-                            <Text>{chat.title}</Text>
-                            <IconButton variant="ghost" color="red" onClick={() => removeChat(chat.id)}>
-                                <CrossCircledIcon height="16" width="16" />
-                            </IconButton>
-                        </Flex>
-                    </Card>
-                ))}
+                {chats.map((chat) => {
+                    if (searchInput && !chat.title.toLowerCase().includes(searchInput.toLowerCase())) {
+                        return null;
+                    }
+
+                    return (
+                        <Card key={chat.id} onClick={() => setActiveChatId(chat.id)}>
+                            <Flex align="center" justify="between">
+                                <Text>{chat.title}</Text>
+                                <IconButton variant="ghost" color="red" onClick={() => removeChat(chat.id)}>
+                                    <CrossCircledIcon height="16" width="16" />
+                                </IconButton>
+                            </Flex>
+                        </Card>
+                    );
+                })}
             </Flex>
         </Flex>
     );
