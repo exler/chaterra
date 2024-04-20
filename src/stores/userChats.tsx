@@ -2,7 +2,7 @@ import localForage from "localforage";
 import { create } from "zustand";
 import { combine, createJSONStorage, persist } from "zustand/middleware";
 
-import { Chat } from "@/types/chat";
+import { ImageGenerationChat, TextGenerationChat } from "@/types/chats";
 import { createLocalForageStorage } from "@/utils/storage";
 
 const storeInstance = localForage.createInstance({
@@ -11,27 +11,58 @@ const storeInstance = localForage.createInstance({
     version: 1.0
 });
 
-export const useUseChatsStore = create(
+const storage = createJSONStorage(() => createLocalForageStorage(storeInstance));
+
+export const useTextGenerationChatsStore = create(
     persist(
         combine(
             {
-                chats: [] as Chat[],
+                textChats: [] as TextGenerationChat[],
                 activeChatId: null as string | null
             },
             (set) => ({
                 setActiveChatId: (activeChatId: string | null) => set({ activeChatId }),
-                addChat: (chat: Chat) => set((state) => ({ chats: [...state.chats, chat] })),
+                addChat: (chat: TextGenerationChat) => set((state) => ({ textChats: [...state.textChats, chat] })),
                 removeChat: (chatId: string) =>
-                    set((state) => ({ chats: state.chats.filter((chat) => chat.id !== chatId) })),
-                updateChat: (chatId: string, chat: Chat) =>
+                    set((state) => ({ textChats: state.textChats.filter((chat) => chat.id !== chatId) })),
+                updateChat: (chatId: string, chat: TextGenerationChat) =>
                     set((state) => ({
-                        chats: state.chats.map((existingChat) => (existingChat.id === chatId ? chat : existingChat))
+                        textChats: state.textChats.map((existingChat) =>
+                            existingChat.id === chatId ? chat : existingChat
+                        )
                     }))
             })
         ),
         {
-            name: "user-chats",
-            storage: createJSONStorage(() => createLocalForageStorage(storeInstance))
+            name: "user-text-chats",
+            storage: storage
+        }
+    )
+);
+
+export const useImageGenerationChatsStore = create(
+    persist(
+        combine(
+            {
+                imageChats: [] as ImageGenerationChat[],
+                activeChatId: null as string | null
+            },
+            (set) => ({
+                setActiveChatId: (activeChatId: string | null) => set({ activeChatId }),
+                addChat: (chat: ImageGenerationChat) => set((state) => ({ imageChats: [...state.imageChats, chat] })),
+                removeChat: (chatId: string) =>
+                    set((state) => ({ imageChats: state.imageChats.filter((chat) => chat.id !== chatId) })),
+                updateChat: (chatId: string, chat: ImageGenerationChat) =>
+                    set((state) => ({
+                        imageChats: state.imageChats.map((existingChat) =>
+                            existingChat.id === chatId ? chat : existingChat
+                        )
+                    }))
+            })
+        ),
+        {
+            name: "user-image-chats",
+            storage: storage
         }
     )
 );

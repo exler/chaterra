@@ -3,15 +3,20 @@ import { Box, Card, Flex, IconButton, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 
 import SiteLogo from "@/assets/logo.png";
-import { useUseChatsStore } from "@/stores/userChats";
+import { GenerationChat } from "@/types/chats";
+
+interface ChatsMenuProps {
+    chats: GenerationChat[];
+    setActiveChatId: (activeChatId: string | null) => void;
+    removeChat: (chatId: string) => void;
+}
 
 interface FormData {
     searchInput: string;
 }
 
-export default function ChatsMenu() {
+export default function ChatsMenu({ chats, setActiveChatId, removeChat }: ChatsMenuProps) {
     const { register, watch } = useForm<FormData>();
-    const { chats, setActiveChatId, removeChat } = useUseChatsStore();
 
     const searchInput = watch("searchInput");
 

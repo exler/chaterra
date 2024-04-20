@@ -1,8 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Root from "@/components/Root/Root";
-import Chat from "@/routes/Chat";
+import ImageGenerationChats from "@/routes/ImageGenerationChats";
 import Settings from "@/routes/Settings";
+import TextGenerationChats from "@/routes/TextGenerationChats";
 
 const router = createBrowserRouter([
     {
@@ -11,7 +12,11 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Chat />
+                element: <TextGenerationChats />
+            },
+            {
+                path: "/images",
+                element: <ImageGenerationChats />
             },
             {
                 path: "/settings",
