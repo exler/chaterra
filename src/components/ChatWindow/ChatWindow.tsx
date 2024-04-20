@@ -29,7 +29,7 @@ export default function ChatWindow({ activeChat, updateChat, sendChatMessage, to
 
     return (
         <Flex direction="column" px="4" align="center" justify="center" width="100%">
-            <Grid columns="1fr 3fr 1fr" width="100%" justify="center" align="center">
+            <Grid columns="1fr 3fr 1fr" width="100%" justify="center" align="center" pb="4">
                 {topLeftComponent}
 
                 <Flex gap="4" justify="center" align="center" gridColumn="2">
@@ -51,17 +51,24 @@ export default function ChatWindow({ activeChat, updateChat, sendChatMessage, to
                     )}
                 </Flex>
             </Grid>
-            <ScrollArea type="auto" scrollbars="vertical">
-                <Flex direction="column" gap="4" mx="8">
+            <ScrollArea type="auto" scrollbars="vertical" size="2" style={{ height: 600 }}>
+                <Flex direction="column" gap="4" mx="8" pb="5rem">
                     {activeChat?.messages.map((chatMessage, index) => (
                         <ChatMessageContainer key={index} chatMessage={chatMessage} />
                     ))}
                 </Flex>
             </ScrollArea>
-            <Flex mt="4" width="100%" align="center" justify="center" asChild>
+
+            <Flex width="100%" align="center" justify="center" position="fixed" bottom="6" asChild>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <Box width="50%" asChild>
-                        <TextArea placeholder="Send your message" size="3" {...register("message")} />
+                        <TextArea
+                            variant="classic"
+                            style={{ background: "black" }}
+                            placeholder="Send your message"
+                            size="3"
+                            {...register("message")}
+                        />
                     </Box>
                     <IconButton size="3" ml="2" type="submit">
                         <PaperPlaneIcon height="16" width="16" />
