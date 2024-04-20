@@ -56,8 +56,8 @@ export default function ChatWindow({ activeChat, updateChat, sendChatMessage, to
                     )}
                 </Flex>
             </Grid>
-            <ScrollArea type="auto" scrollbars="vertical" size="2" style={{ height: 600 }}>
-                <Flex direction="column" gap="4" mx="8" pb="5rem">
+            <ScrollArea type="auto" scrollbars="vertical" size="2" style={{ height: "36rem" }}>
+                <Flex direction="column" gap="4" mx="8" pb="8">
                     {activeChat?.messages.map((chatMessage, index) => (
                         <ChatMessageContainer key={index} chatMessage={chatMessage} />
                     ))}

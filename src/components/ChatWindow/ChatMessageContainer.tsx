@@ -7,7 +7,9 @@ export default function ChatMessageContainer({ chatMessage }: { chatMessage: Cha
         <Card asChild>
             <Box width="fit-content" maxWidth="80%" ml={chatMessage.userMessage ? "auto" : "0"}>
                 {chatMessage.imageURL && <img src={chatMessage.imageURL} width="256" height="256" alt="" />}
-                <Text>{chatMessage.text}</Text>
+                <Text as="p" style={{ whiteSpace: "pre-wrap" }}>
+                    {chatMessage.text}
+                </Text>
             </Box>
         </Card>
     );
