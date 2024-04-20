@@ -13,11 +13,13 @@ export default function ChatsMenu() {
                 <img src={SiteLogo} alt="Chaterra" height={50} width={160} />
             </Box>
             <Flex>
-                <TextField.Root placeholder="Search your chats...">
-                    <TextField.Slot>
-                        <MagnifyingGlassIcon height="16" width="16" />
-                    </TextField.Slot>
-                </TextField.Root>
+                <Box width="100%" asChild>
+                    <TextField.Root placeholder="Search your chats...">
+                        <TextField.Slot>
+                            <MagnifyingGlassIcon height="16" width="16" />
+                        </TextField.Slot>
+                    </TextField.Root>
+                </Box>
                 <IconButton ml="2" onClick={() => setActiveChatId(null)}>
                     <PlusCircledIcon height="16" width="16" />
                 </IconButton>

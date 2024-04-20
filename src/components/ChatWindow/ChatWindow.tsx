@@ -1,4 +1,4 @@
-import { PaperPlaneIcon } from "@radix-ui/react-icons";
+import { PaperPlaneIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import { Box, Flex, Grid, Heading, IconButton, ScrollArea, SegmentedControl, TextArea } from "@radix-ui/themes";
 import { nanoid } from "nanoid";
 import OpenAI from "openai";
@@ -10,6 +10,9 @@ import { useUserSettingsStore } from "@/stores/userSettings";
 import { Model } from "@/types/chat";
 
 import ChatMessageContainer from "./ChatMessageContainer";
+import EditChatTitleDialog from "./EditChatTitleDialog";
+
+const MAX_CHAT_TITLE_LENGTH = 30;
 
 interface FormData {
     message: string;
@@ -37,6 +40,14 @@ export default function ChatWindow() {
         apiKey: openAIApiKey,
         dangerouslyAllowBrowser: true
     });
+
+    const getChatTitleFromMessage = (message: string) => {
+        const title = message.split("\n")[0].trim();
+        if (title.length > MAX_CHAT_TITLE_LENGTH) {
+            return title.slice(0, MAX_CHAT_TITLE_LENGTH) + "...";
+        }
+        return title;
+    };
 
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         reset();
@@ -70,7 +81,7 @@ export default function ChatWindow() {
             const newId = nanoid();
             addChat({
                 id: newId,
-                title: "New Chat",
+                title: getChatTitleFromMessage(data.message),
                 model: chatModel,
                 messages: [
                     { text: data.message, userMessage: true },
@@ -89,7 +100,24 @@ export default function ChatWindow() {
                     <SegmentedControl.Item value={Model.GPT4}>GPT-4</SegmentedControl.Item>
                 </SegmentedControl.Root>
 
-                <Heading align="center">{activeChat?.title ?? "Start a new conversation"}</Heading>
+                <Flex gap="4" justify="center" align="center">
+                    <Heading align="center">{activeChat?.title ?? "Start a new conversation"}</Heading>
+                    {activeChat && (
+                        <EditChatTitleDialog
+                            currentTitle={activeChat.title}
+                            onSaveAction={(value: string) => {
+                                updateChat(activeChat.id, {
+                                    ...activeChat,
+                                    title: value
+                                });
+                            }}
+                        >
+                            <IconButton variant="ghost">
+                                <Pencil2Icon width="16" height="16" />
+                            </IconButton>
+                        </EditChatTitleDialog>
+                    )}
+                </Flex>
             </Grid>
             <ScrollArea type="auto" scrollbars="vertical">
                 <Flex direction="column" gap="4" mx="8">
