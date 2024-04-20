@@ -1,5 +1,6 @@
 import { PaperPlaneIcon, Pencil2Icon } from "@radix-ui/react-icons";
 import { Box, Flex, Grid, Heading, IconButton, ScrollArea, TextArea } from "@radix-ui/themes";
+import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { GenerationChat } from "@/types/chats";
@@ -21,10 +22,14 @@ interface FormData {
 export default function ChatWindow({ activeChat, updateChat, sendChatMessage, topLeftComponent }: ChatWindowProps) {
     const { register, handleSubmit, reset } = useForm<FormData>();
 
+    const bottomRef = useRef<HTMLDivElement>(null);
+
     const onSubmit: SubmitHandler<FormData> = async (data) => {
         reset();
 
         await sendChatMessage(data.message);
+
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
     return (
@@ -56,6 +61,7 @@ export default function ChatWindow({ activeChat, updateChat, sendChatMessage, to
                     {activeChat?.messages.map((chatMessage, index) => (
                         <ChatMessageContainer key={index} chatMessage={chatMessage} />
                     ))}
+                    <div ref={bottomRef} />
                 </Flex>
             </ScrollArea>
 
@@ -68,6 +74,12 @@ export default function ChatWindow({ activeChat, updateChat, sendChatMessage, to
                             placeholder="Send your message"
                             size="3"
                             {...register("message")}
+                            onKeyDown={async (e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    await handleSubmit(onSubmit)();
+                                }
+                            }}
                         />
                     </Box>
                     <IconButton size="3" ml="2" type="submit">
