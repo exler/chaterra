@@ -79,6 +79,7 @@ export default function ImageGenerationChats() {
                             { label: "Standard", value: ImageGenerationQuality.STANDARD },
                             { label: "HD", value: ImageGenerationQuality.HD }
                         ]}
+                        disabled={!!activeChat}
                     />
                 }
             />

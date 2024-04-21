@@ -84,6 +84,7 @@ export default function TextGenerationChats() {
                             { label: "GPT-3.5", value: Model.GPT35TURBO },
                             { label: "GPT-4", value: Model.GPT4 }
                         ]}
+                        disabled={!!activeChat}
                     />
                 }
             />

@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { twJoin } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 
 interface Segment {
     label: string;
@@ -10,10 +10,13 @@ interface SegmentedControlProps {
     segments: Segment[];
     value: string | number;
     onValueChange: (value: string | number) => void;
+    disabled?: boolean;
 }
 
-export default function SegmentedControl({ segments, value, onValueChange }: SegmentedControlProps) {
+export default function SegmentedControl({ segments, value, onValueChange, disabled }: SegmentedControlProps) {
     const controlId = useId();
+
+    console.log(disabled);
 
     return (
         <div className="flex flex-wrap mt-2 justify-center">
@@ -26,12 +29,14 @@ export default function SegmentedControl({ segments, value, onValueChange }: Seg
                         onChange={(e) => onValueChange(e.target.value)}
                         checked={value === segment.value}
                         className="hidden peer"
+                        disabled={disabled}
                     />
                     <span
-                        className={twJoin(
-                            "block cursor-pointer bg-neutral px-4 py-1 relative text-center tracking-wide peer-checked:bg-primary",
+                        className={twMerge(
+                            "block cursor-pointer bg-neutral px-4 py-1 relative text-center tracking-wide peer-checked:bg-primary peer-checked:text-black",
                             index === 0 ? "rounded-l-md" : "",
-                            index === segments.length - 1 ? "rounded-r-md" : ""
+                            index === segments.length - 1 ? "rounded-r-md" : "",
+                            disabled ? "cursor-not-allowed" : ""
                         )}
                     >
                         {segment.label}
