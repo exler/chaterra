@@ -47,13 +47,17 @@ export default function ChatsMenu({ chats, setActiveChatId, removeChat }: ChatsM
 
                     return (
                         <div
-                            className="card card-compact bg-neutral cursor-pointer"
+                            className="card card-compact bg-neutral cursor-pointer hover:bg-gray-700"
                             key={chat.id}
                             onClick={() => setActiveChatId(chat.id)}
                         >
                             <div className="card-body flex flex-row justify-between items-center">
                                 <span>{chat.title}</span>
-                                <button type="button" className="text-error" onClick={() => removeChat(chat.id)}>
+                                <button
+                                    type="button"
+                                    className="text-error p-1 rounded-md hover:bg-red-900"
+                                    onClick={() => removeChat(chat.id)}
+                                >
                                     <TiDeleteOutline size="1rem" />
                                 </button>
                             </div>
