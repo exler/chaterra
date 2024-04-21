@@ -67,6 +67,7 @@ export default function ImageGenerationChats() {
             <ChatsMenu chats={imageChats} setActiveChatId={setActiveChatId} removeChat={removeChat} />
             <ChatWindow
                 className="col-span-4"
+                maxResponses={1}
                 activeChat={activeChat}
                 updateChat={updateChat as (chatId: string, chat: GenerationChat) => void}
                 sendChatMessage={sendChatMessage}

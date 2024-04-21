@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BsSend } from "react-icons/bs";
+import { FaCircleInfo } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 
 import { GenerationChat } from "@/types/chats";
@@ -10,6 +11,7 @@ import EditChatTitleDialog from "./EditChatTitleDialog";
 
 interface ChatWindowProps {
     className?: string;
+    maxResponses?: number;
     activeChat?: GenerationChat | null;
     updateChat: (chatId: string, chat: GenerationChat) => void;
     sendChatMessage: (message: string) => Promise<void>;
@@ -22,6 +24,7 @@ interface FormData {
 
 export default function ChatWindow({
     className,
+    maxResponses,
     activeChat,
     updateChat,
     sendChatMessage,
@@ -64,25 +67,37 @@ export default function ChatWindow({
                 </div>
             </div>
 
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="flex flex-row items-center justify-center fixed w-full bottom-6"
-            >
-                <textarea
-                    className="textarea textarea-bordered w-1/2"
-                    placeholder="Send your message"
-                    {...register("message")}
-                    onKeyDown={async (e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                            e.preventDefault();
-                            await handleSubmit(onSubmit)();
-                        }
-                    }}
-                />
-                <button className="btn btn-primary ml-2" type="submit">
-                    <BsSend size="1rem" />
-                </button>
-            </form>
+            {maxResponses && activeChat && activeChat.messages.length >= maxResponses ? (
+                <div className="alert alert-info w-1/2 fixed bottom-6">
+                    <FaCircleInfo size="1rem" />
+                    <span>
+                        This chat only supports {maxResponses} {maxResponses > 1 ? "responses" : "response"} from the
+                        AI.
+                    </span>
+                </div>
+            ) : (
+                <>
+                    <form
+                        onSubmit={handleSubmit(onSubmit)}
+                        className="flex flex-row items-center justify-center fixed w-full bottom-6"
+                    >
+                        <textarea
+                            className="textarea textarea-bordered w-1/2"
+                            placeholder="Send your message"
+                            {...register("message")}
+                            onKeyDown={async (e) => {
+                                if (e.key === "Enter" && !e.shiftKey) {
+                                    e.preventDefault();
+                                    await handleSubmit(onSubmit)();
+                                }
+                            }}
+                        />
+                        <button className="btn btn-primary ml-2" type="submit">
+                            <BsSend size="1rem" />
+                        </button>
+                    </form>
+                </>
+            )}
         </div>
     );
 }
