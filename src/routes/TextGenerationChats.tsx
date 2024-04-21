@@ -1,9 +1,9 @@
-import { Grid, SegmentedControl } from "@radix-ui/themes";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 
 import ChatsMenu from "@/components/ChatsMenu/ChatsMenu";
 import ChatWindow from "@/components/ChatWindow/ChatWindow";
+import SegmentedControl from "@/components/SegmentedControl/SegmentedControl";
 import { useTextGenerationChatsStore } from "@/stores/userChats";
 import { useUserSettingsStore } from "@/stores/userSettings";
 import { GenerationChat, Model } from "@/types/chats";
@@ -69,19 +69,24 @@ export default function TextGenerationChats() {
     };
 
     return (
-        <Grid columns="1fr 4fr">
+        <div className="grid grid-cols-5">
             <ChatsMenu chats={textChats} setActiveChatId={setActiveChatId} removeChat={removeChat} />
             <ChatWindow
+                className="col-span-4"
                 activeChat={activeChat}
                 updateChat={updateChat as (chatId: string, chat: GenerationChat) => void}
                 sendChatMessage={sendChatMessage}
                 topLeftComponent={
-                    <SegmentedControl.Root value={chatModel} onValueChange={(value: Model) => setChatModel(value)}>
-                        <SegmentedControl.Item value={Model.GPT35TURBO}>GPT-3.5</SegmentedControl.Item>
-                        <SegmentedControl.Item value={Model.GPT4}>GPT-4</SegmentedControl.Item>
-                    </SegmentedControl.Root>
+                    <SegmentedControl
+                        value={chatModel}
+                        onValueChange={(value: string | number) => setChatModel(value as Model)}
+                        segments={[
+                            { label: "GPT-3.5", value: Model.GPT35TURBO },
+                            { label: "GPT-4", value: Model.GPT4 }
+                        ]}
+                    />
                 }
             />
-        </Grid>
+        </div>
     );
 }

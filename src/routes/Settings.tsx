@@ -1,7 +1,6 @@
-import { LockOpen1Icon } from "@radix-ui/react-icons";
-import { Button, Flex, Heading, Section, Text, TextField } from "@radix-ui/themes";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FaKey } from "react-icons/fa6";
 
 import { useUserSettingsStore } from "@/stores/userSettings";
 
@@ -23,23 +22,26 @@ export default function Settings() {
     };
 
     return (
-        <Flex justify="center" align="center" direction="column">
-            <Heading>Settings</Heading>
-            <Section width="30%">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Flex direction="column" gap="4">
-                        <label>
-                            <Text>OpenAI API Key</Text>
-                            <TextField.Root placeholder="Add your OpenAI key..." {...register("openAIApiKey")}>
-                                <TextField.Slot>
-                                    <LockOpen1Icon width="16" height="16" />
-                                </TextField.Slot>
-                            </TextField.Root>
-                        </label>
-                        <Button type="submit">Update</Button>
-                    </Flex>
+        <div className="flex flex-col items-center justify-center gap-8">
+            <h1 className="font-bold text-2xl">Settings</h1>
+            <section className="w-1/3">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+                    <label className="form-control">
+                        <div className="label">
+                            <span className="label-text">OpenAI API Key</span>
+                        </div>
+
+                        <div className="input input-bordered input-sm flex items-center gap-2">
+                            <FaKey size="1rem" />
+                            <input type="text" className="grow" {...register("openAIApiKey")} />
+                        </div>
+                    </label>
+
+                    <button type="submit" className="btn btn-sm btn-primary">
+                        Update
+                    </button>
                 </form>
-            </Section>
-        </Flex>
+            </section>
+        </div>
     );
 }

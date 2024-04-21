@@ -1,18 +1,18 @@
-import { GearIcon, ImageIcon, Pencil2Icon } from "@radix-ui/react-icons";
-import { Flex } from "@radix-ui/themes";
+import { BsChatLeftDots } from "react-icons/bs";
+import { FaGears, FaImage } from "react-icons/fa6";
 
 import MenuLink from "./MenuLink";
 
 export default function MenuBar() {
     return (
-        <Flex direction="column" justify="between" my="4" mx="2">
-            <Flex direction="column" gap="4">
-                <MenuLink to="/" icon={<Pencil2Icon width="24" height="24" />} />
-                <MenuLink to="/images" icon={<ImageIcon width="24" height="24" />} />
-            </Flex>
-            <Flex direction="column">
-                <MenuLink to="/settings" icon={<GearIcon width="24" height="24" />} />
-            </Flex>
-        </Flex>
+        <nav className="flex flex-col justify-between my-4 mx-2">
+            <div className="flex flex-col gap-4">
+                <MenuLink to="/" icon={<BsChatLeftDots size="1.5rem" />} />
+                <MenuLink to="/images" icon={<FaImage size="1.5rem" />} />
+            </div>
+            <div className="flex flex-col gap-4">
+                <MenuLink to="/settings" icon={<FaGears size="1.5rem" />} />
+            </div>
+        </nav>
     );
 }

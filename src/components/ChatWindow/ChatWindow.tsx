@@ -1,7 +1,7 @@
-import { PaperPlaneIcon, Pencil2Icon } from "@radix-ui/react-icons";
-import { Box, Flex, Grid, Heading, IconButton, ScrollArea, TextArea } from "@radix-ui/themes";
 import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { BsSend } from "react-icons/bs";
+import { twMerge } from "tailwind-merge";
 
 import { GenerationChat } from "@/types/chats";
 
@@ -9,6 +9,7 @@ import ChatMessageContainer from "./ChatMessageContainer";
 import EditChatTitleDialog from "./EditChatTitleDialog";
 
 interface ChatWindowProps {
+    className?: string;
     activeChat?: GenerationChat | null;
     updateChat: (chatId: string, chat: GenerationChat) => void;
     sendChatMessage: (message: string) => Promise<void>;
@@ -19,7 +20,13 @@ interface FormData {
     message: string;
 }
 
-export default function ChatWindow({ activeChat, updateChat, sendChatMessage, topLeftComponent }: ChatWindowProps) {
+export default function ChatWindow({
+    className,
+    activeChat,
+    updateChat,
+    sendChatMessage,
+    topLeftComponent
+}: ChatWindowProps) {
     const { register, handleSubmit, reset } = useForm<FormData>();
 
     const bottomRef = useRef<HTMLDivElement>(null);
@@ -33,60 +40,49 @@ export default function ChatWindow({ activeChat, updateChat, sendChatMessage, to
     };
 
     return (
-        <Flex direction="column" px="4" align="center" justify="center" width="100%">
-            <Grid columns="1fr 3fr 1fr" width="100%" justify="center" align="center" pb="4">
+        <div className={twMerge("flex flex-col items-center justify-center w-full px-4", className)}>
+            <div className="grid grid-cols-5 w-full items-center justify-center pb-4">
                 {topLeftComponent}
 
-                <Flex gap="4" justify="center" align="center" gridColumn="2">
-                    <Heading align="center">{activeChat?.title ?? "Start a new conversation"}</Heading>
+                <div className="flex flex-row gap-4 items-center justify-center col-span-3 col-start-2">
+                    <h1 className="font-bold text-xl text-center">{activeChat?.title ?? "Start a new conversation"}</h1>
                     {activeChat && (
                         <EditChatTitleDialog
                             currentTitle={activeChat.title}
-                            onSaveAction={(value: string) => {
-                                updateChat(activeChat.id, {
-                                    ...activeChat,
-                                    title: value
-                                });
-                            }}
-                        >
-                            <IconButton variant="ghost">
-                                <Pencil2Icon width="16" height="16" />
-                            </IconButton>
-                        </EditChatTitleDialog>
+                            activeChat={activeChat}
+                            updateChat={updateChat}
+                        />
                     )}
-                </Flex>
-            </Grid>
-            <ScrollArea type="auto" scrollbars="vertical" size="2" style={{ height: "36rem" }}>
-                <Flex direction="column" gap="4" mx="8" pb="8">
+                </div>
+            </div>
+            <div className="w-full h-[38rem] overflow-y-scroll">
+                <div className="flex flex-col gap-4 mx-8 pb-14">
                     {activeChat?.messages.map((chatMessage, index) => (
                         <ChatMessageContainer key={index} chatMessage={chatMessage} />
                     ))}
                     <div ref={bottomRef} />
-                </Flex>
-            </ScrollArea>
+                </div>
+            </div>
 
-            <Flex width="100%" align="center" justify="center" position="fixed" bottom="6" asChild>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Box width="50%" asChild>
-                        <TextArea
-                            variant="classic"
-                            style={{ background: "black" }}
-                            placeholder="Send your message"
-                            size="3"
-                            {...register("message")}
-                            onKeyDown={async (e) => {
-                                if (e.key === "Enter" && !e.shiftKey) {
-                                    e.preventDefault();
-                                    await handleSubmit(onSubmit)();
-                                }
-                            }}
-                        />
-                    </Box>
-                    <IconButton size="3" ml="2" type="submit">
-                        <PaperPlaneIcon height="16" width="16" />
-                    </IconButton>
-                </form>
-            </Flex>
-        </Flex>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex flex-row items-center justify-center fixed w-full bottom-6"
+            >
+                <textarea
+                    className="textarea textarea-bordered w-1/2"
+                    placeholder="Send your message"
+                    {...register("message")}
+                    onKeyDown={async (e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault();
+                            await handleSubmit(onSubmit)();
+                        }
+                    }}
+                />
+                <button className="btn btn-primary ml-2" type="submit">
+                    <BsSend size="1rem" />
+                </button>
+            </form>
+        </div>
     );
 }

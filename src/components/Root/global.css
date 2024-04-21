@@ -1,11 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
     margin: 0;
     padding: 0;
-}
-
-/* react-router-dom adds .active class to the active NavLink */
-.active {
-    /* Radix adds --color-background */
-    border-radius: 0.2rem;
-    background: color-mix(in srgb, var(--color-background) 50%, white 8%);
 }

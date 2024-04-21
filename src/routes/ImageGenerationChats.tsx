@@ -1,9 +1,9 @@
-import { Grid, SegmentedControl } from "@radix-ui/themes";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 
 import ChatsMenu from "@/components/ChatsMenu/ChatsMenu";
 import ChatWindow from "@/components/ChatWindow/ChatWindow";
+import SegmentedControl from "@/components/SegmentedControl/SegmentedControl";
 import { useImageGenerationChatsStore } from "@/stores/userChats";
 import { useUserSettingsStore } from "@/stores/userSettings";
 import { GenerationChat, ImageGenerationQuality } from "@/types/chats";
@@ -63,22 +63,24 @@ export default function ImageGenerationChats() {
     };
 
     return (
-        <Grid columns="1fr 4fr">
+        <div className="grid grid-cols-5">
             <ChatsMenu chats={imageChats} setActiveChatId={setActiveChatId} removeChat={removeChat} />
             <ChatWindow
+                className="col-span-4"
                 activeChat={activeChat}
                 updateChat={updateChat as (chatId: string, chat: GenerationChat) => void}
                 sendChatMessage={sendChatMessage}
                 topLeftComponent={
-                    <SegmentedControl.Root
+                    <SegmentedControl
                         value={imageQuality}
-                        onValueChange={(value: ImageGenerationQuality) => setImageQuality(value)}
-                    >
-                        <SegmentedControl.Item value={ImageGenerationQuality.STANDARD}>Standard</SegmentedControl.Item>
-                        <SegmentedControl.Item value={ImageGenerationQuality.HD}>HD</SegmentedControl.Item>
-                    </SegmentedControl.Root>
+                        onValueChange={(value: number | string) => setImageQuality(value as ImageGenerationQuality)}
+                        segments={[
+                            { label: "Standard", value: ImageGenerationQuality.STANDARD },
+                            { label: "HD", value: ImageGenerationQuality.HD }
+                        ]}
+                    />
                 }
             />
-        </Grid>
+        </div>
     );
 }

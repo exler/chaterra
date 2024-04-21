@@ -1,15 +1,14 @@
-import { Button, Flex, Heading, Section } from "@radix-ui/themes";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function NotFound() {
     return (
-        <Section>
-            <Flex direction="column" align="center" justify="center" gap="4">
-                <Heading>Page not found</Heading>
-                <RouterLink to="/">
-                    <Button type="button">Go to home page</Button>
+        <section>
+            <div className="flex flex-col items-center justify-center gap-4">
+                <h1 className="font-bold text-xl">Page not found</h1>
+                <RouterLink to="/" className="btn btn-primary">
+                    Go to home page
                 </RouterLink>
-            </Flex>
-        </Section>
+            </div>
+        </section>
     );
 }

@@ -1,6 +1,6 @@
-import { CrossCircledIcon, MagnifyingGlassIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import { Box, Card, Flex, IconButton, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
+import { FaCirclePlus, FaMagnifyingGlass } from "react-icons/fa6";
+import { TiDeleteOutline } from "react-icons/ti";
 
 import SiteLogo from "@/assets/logo.png";
 import { GenerationChat } from "@/types/chats";
@@ -21,40 +21,46 @@ export default function ChatsMenu({ chats, setActiveChatId, removeChat }: ChatsM
     const searchInput = watch("searchInput");
 
     return (
-        <Flex direction="column">
-            <Box mx="auto">
+        <div className="flex flex-col gap-2">
+            <div className="mx-auto">
                 <img src={SiteLogo} alt="Chaterra" height={50} width={160} />
-            </Box>
-            <Flex>
-                <Box width="100%" asChild>
-                    <TextField.Root placeholder="Search your chats..." {...register("searchInput")}>
-                        <TextField.Slot>
-                            <MagnifyingGlassIcon height="16" width="16" />
-                        </TextField.Slot>
-                    </TextField.Root>
-                </Box>
-                <IconButton ml="2" onClick={() => setActiveChatId(null)}>
-                    <PlusCircledIcon height="16" width="16" />
-                </IconButton>
-            </Flex>
-            <Flex direction="column" mt="2" gap="2">
+            </div>
+            <div className="flex flex-row">
+                <label className="input input-bordered input-sm flex items-center gap-2 w-full">
+                    <FaMagnifyingGlass size="0.8rem" />
+                    <input
+                        type="text"
+                        placeholder="Search your chats..."
+                        className="grow"
+                        {...register("searchInput")}
+                    />
+                </label>
+                <button type="button" className="btn btn-primary btn-sm ml-2" onClick={() => setActiveChatId(null)}>
+                    <FaCirclePlus size="0.8rem" />
+                </button>
+            </div>
+            <div className="flex flex-col gap-2">
                 {chats.map((chat) => {
                     if (searchInput && !chat.title.toLowerCase().includes(searchInput.toLowerCase())) {
                         return null;
                     }
 
                     return (
-                        <Card key={chat.id} onClick={() => setActiveChatId(chat.id)}>
-                            <Flex align="center" justify="between">
-                                <Text>{chat.title}</Text>
-                                <IconButton variant="ghost" color="red" onClick={() => removeChat(chat.id)}>
-                                    <CrossCircledIcon height="16" width="16" />
-                                </IconButton>
-                            </Flex>
-                        </Card>
+                        <div
+                            className="card card-compact bg-neutral cursor-pointer"
+                            key={chat.id}
+                            onClick={() => setActiveChatId(chat.id)}
+                        >
+                            <div className="card-body flex flex-row justify-between items-center">
+                                <span>{chat.title}</span>
+                                <button type="button" className="text-error" onClick={() => removeChat(chat.id)}>
+                                    <TiDeleteOutline size="1rem" />
+                                </button>
+                            </div>
+                        </div>
                     );
                 })}
-            </Flex>
-        </Flex>
+            </div>
+        </div>
     );
 }

@@ -1,5 +1,4 @@
-import { Box, Link as RadixLink } from "@radix-ui/themes";
-import { NavLink as RouterNavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 interface MenuLinkProps {
     to: string;
@@ -8,12 +7,8 @@ interface MenuLinkProps {
 
 export default function MenuLink({ to, icon }: MenuLinkProps) {
     return (
-        <RadixLink underline="none" asChild>
-            <RouterNavLink to={to}>
-                <Box m="1" asChild>
-                    {icon}
-                </Box>
-            </RouterNavLink>
-        </RadixLink>
+        <NavLink to={to} className={({ isActive }) => ["p-1 rounded-md", isActive ? "bg-neutral" : ""].join(" ")}>
+            {icon}
+        </NavLink>
     );
 }

@@ -1,57 +1,56 @@
-import { Button, Dialog, Flex, Text, TextField } from "@radix-ui/themes";
+import { useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { FaPenToSquare } from "react-icons/fa6";
+
+import Modal from "@/components/Modal/Modal";
+import { GenerationChat } from "@/types/chats";
 
 interface EditChatTitleDialogProps {
     currentTitle: string;
-    onSaveAction: (value: string) => void;
-    children: React.ReactNode;
+    activeChat: GenerationChat;
+    updateChat: (chatId: string, chat: GenerationChat) => void;
 }
 
 interface FormData {
     title: string;
 }
 
-export default function EditChatTitleDialog({ currentTitle, onSaveAction, children }: EditChatTitleDialogProps) {
+export default function EditChatTitleDialog({ currentTitle, activeChat, updateChat }: EditChatTitleDialogProps) {
     const { register, handleSubmit, reset } = useForm<FormData>({
         defaultValues: {
             title: currentTitle
         }
     });
 
+    const form = useRef<HTMLFormElement>(null);
+
     const onSubmit: SubmitHandler<FormData> = (data) => {
         reset();
-        onSaveAction(data.title);
+
+        updateChat(activeChat.id, {
+            ...activeChat,
+            title: data.title
+        });
     };
 
     return (
-        <Dialog.Root>
-            <Dialog.Trigger>{children}</Dialog.Trigger>
+        <Modal
+            modalTitle="Edit chat title"
+            triggerContent={<FaPenToSquare size="1rem" />}
+            actionButtonLabel="Save"
+            onActionButtonClick={() => {
+                form.current?.submit();
+            }}
+        >
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+                <label className="form-control">
+                    <div className="label">
+                        <span className="label-text">Title</span>
+                    </div>
 
-            <Dialog.Content maxWidth="450px">
-                <Dialog.Title>Edit chat title</Dialog.Title>
-
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <Flex direction="column" gap="3">
-                        <label>
-                            <Text as="div" size="2" mb="1" weight="bold">
-                                Title
-                            </Text>
-                            <TextField.Root {...register("title")} />
-                        </label>
-                    </Flex>
-
-                    <Flex gap="3" mt="4" justify="end">
-                        <Dialog.Close>
-                            <Button variant="soft" color="gray">
-                                Cancel
-                            </Button>
-                        </Dialog.Close>
-                        <Dialog.Close>
-                            <Button type="submit">Save</Button>
-                        </Dialog.Close>
-                    </Flex>
-                </form>
-            </Dialog.Content>
-        </Dialog.Root>
+                    <input type="text" className="input input-bordered input-sm" {...register("title")} />
+                </label>
+            </form>
+        </Modal>
     );
 }
