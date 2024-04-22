@@ -24,7 +24,7 @@ export default function SegmentedControl({
     const controlId = useId();
 
     return (
-        <div className={twMerge("flex flex-wrap mt-2", className)}>
+        <div className={twMerge("flex flex-wrap", className)}>
             {segments.map((segment, index) => (
                 <label key={index}>
                     <input

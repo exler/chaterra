@@ -32,10 +32,10 @@ export default function Settings() {
     };
 
     return (
-        <div className="flex flex-col items-center h-full justify-between">
+        <div className="flex flex-col items-center h-full justify-between pr-4 lg:pr-0">
             <div className="flex flex-col items-center gap-8 w-full">
                 <h1 className="font-bold text-2xl">Settings</h1>
-                <section className="w-1/3">
+                <section className="w-full lg:w-1/3">
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                         {showUpdated && (
                             <div role="alert" className="alert alert-success">

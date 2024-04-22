@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 import ChatsMenu from "@/components/ChatsMenu/ChatsMenu";
 import ChatWindow from "@/components/ChatWindow/ChatWindow";
@@ -42,10 +43,15 @@ export default function TextGenerationChats() {
     };
 
     return (
-        <div className="grid grid-cols-5">
-            <ChatsMenu chats={textChats} setActiveChatId={setActiveChatId} removeChat={removeChat} />
+        <div className="lg:grid lg:grid-cols-5">
+            <ChatsMenu
+                className={twMerge("pr-4 lg:pr-0", activeChat && "hidden lg:flex")}
+                chats={textChats}
+                setActiveChatId={setActiveChatId}
+                removeChat={removeChat}
+            />
             <ChatWindow
-                className="col-span-4"
+                className={twMerge("col-span-4 hidden lg:flex", activeChat && "flex")}
                 chatModel={chatModel}
                 activeChat={activeChat}
                 setActiveChatId={setActiveChatId}
@@ -54,7 +60,7 @@ export default function TextGenerationChats() {
                 getAIChatResponse={getAIChatResponse}
                 topLeftComponent={
                     <SegmentedControl
-                        className="justify-center"
+                        className="justify-center lg:mt-2"
                         value={chatModel}
                         onValueChange={(value: string | number) => setChatModel(value as TextGenerationModel)}
                         segments={[

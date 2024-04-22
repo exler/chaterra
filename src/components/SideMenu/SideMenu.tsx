@@ -4,7 +4,7 @@ import SiteLogo from "@/assets/logo.png";
 
 interface SideMenuProps {
     className?: string;
-    children: React.ReactNode;
+    children: React.ReactNode | React.ReactNode[];
 }
 
 export default function SideMenu({ className, children }: SideMenuProps) {

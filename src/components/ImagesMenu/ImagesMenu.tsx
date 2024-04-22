@@ -18,7 +18,7 @@ export default function ImagesMenu({
     return (
         <SideMenu>
             <>
-                <div className="divider divider-primary"></div>
+                <div className="divider divider-primary pr-4 lg:pr-0"></div>
                 <div className="flex flex-col gap-2">
                     <div>
                         <label>Quality</label>

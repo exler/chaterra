@@ -82,8 +82,17 @@ export default function ChatWindow({
 
     return (
         <div className={twMerge("flex flex-col items-center justify-center w-full px-4", className)}>
-            <div className="grid grid-cols-5 w-full items-center justify-center pb-4">
-                {topLeftComponent}
+            <div className="lg:grid lg:grid-cols-5 w-full items-center justify-center pb-4">
+                <div className="flex flex-row justify-between lg:justify-center">
+                    {topLeftComponent}
+                    <button
+                        type="button"
+                        onClick={() => setActiveChatId(null)}
+                        className="btn btn-neutral btn-sm lg:hidden"
+                    >
+                        Go back
+                    </button>
+                </div>
 
                 <div className="flex flex-row gap-4 items-center justify-center col-span-3 col-start-2">
                     <h1 className="font-bold text-xl text-center">{activeChat?.title ?? "Start a new conversation"}</h1>
@@ -97,7 +106,7 @@ export default function ChatWindow({
                 </div>
             </div>
             <div className="w-full h-[38rem] overflow-y-scroll">
-                <div className="flex flex-col gap-4 mx-8 pb-14">
+                <div className="flex flex-col gap-4 lg:mx-8 pb-14">
                     {activeChat?.messages.map((chatMessage, index) => (
                         <ChatMessageContainer
                             key={index}

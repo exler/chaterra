@@ -29,14 +29,14 @@ export default function ImageGenerationScreen() {
     };
 
     return (
-        <div className="grid grid-cols-5">
+        <div className="lg:grid lg:grid-cols-5">
             <ImagesMenu
                 imageQuality={imageQuality}
                 setImageQuality={setImageQuality}
                 imageAspectRatio={imageAspectRatio}
                 setImageAspectRatio={setImageAspectRatio}
             />
-            <ImageWindow className="col-span-4" generateImage={generateImage} />
+            <ImageWindow className="col-span-4 mt-16 lg:mt-0" generateImage={generateImage} />
         </div>
     );
 }

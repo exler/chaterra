@@ -22,7 +22,7 @@ export default function ImageWindow({ className, generateImage }: ChatWindowProp
     };
 
     return (
-        <div className={twMerge("flex flex-col items-center justify-center w-full px-4", className)}>
+        <div className={twMerge("flex flex-col items-center justify-center w-full pr-4 lg:px-4", className)}>
             {isLoading ? (
                 <>
                     <span className="loading loading-ball loading-lg"></span>
