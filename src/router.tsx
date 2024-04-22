@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import Root from "@/components/Root/Root";
-import ImageGenerationChats from "@/routes/ImageGenerationChats";
+import ImageGenerationScreen from "@/routes/ImageGenerationScreen";
 import NotFound from "@/routes/NotFound";
 import Settings from "@/routes/Settings";
 import TextGenerationChats from "@/routes/TextGenerationChats";
@@ -21,7 +21,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/images",
-                element: <ImageGenerationChats />
+                element: <ImageGenerationScreen />
             },
             {
                 path: "/settings",

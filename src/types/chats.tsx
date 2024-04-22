@@ -4,9 +4,15 @@ export interface ChatMessage {
     userMessage: boolean;
 }
 
-export enum Model {
+export enum TextGenerationModel {
     GPT35TURBO = "gpt-3.5-turbo",
     GPT4 = "gpt-4"
+}
+
+export enum ImageGenerationAspectRatio {
+    SQUARE = "1024x1024",
+    LANDSCAPE = "1792x1024",
+    PORTRAIT = "1024x1792"
 }
 
 export enum ImageGenerationQuality {
@@ -21,9 +27,5 @@ export interface GenerationChat {
 }
 
 export interface TextGenerationChat extends GenerationChat {
-    model: Model;
-}
-
-export interface ImageGenerationChat extends GenerationChat {
-    quality: ImageGenerationQuality;
+    model: TextGenerationModel;
 }

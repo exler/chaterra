@@ -2,7 +2,7 @@ import localForage from "localforage";
 import { create } from "zustand";
 import { combine, createJSONStorage, persist } from "zustand/middleware";
 
-import { ImageGenerationChat, TextGenerationChat } from "@/types/chats";
+import { TextGenerationChat } from "@/types/chats";
 import { createLocalForageStorage } from "@/utils/storage";
 
 const storeInstance = localForage.createInstance({
@@ -35,33 +35,6 @@ export const useTextGenerationChatsStore = create(
         ),
         {
             name: "user-text-chats",
-            storage: storage
-        }
-    )
-);
-
-export const useImageGenerationChatsStore = create(
-    persist(
-        combine(
-            {
-                imageChats: [] as ImageGenerationChat[],
-                activeChatId: null as string | null
-            },
-            (set) => ({
-                setActiveChatId: (activeChatId: string | null) => set({ activeChatId }),
-                addChat: (chat: ImageGenerationChat) => set((state) => ({ imageChats: [...state.imageChats, chat] })),
-                removeChat: (chatId: string) =>
-                    set((state) => ({ imageChats: state.imageChats.filter((chat) => chat.id !== chatId) })),
-                updateChat: (chatId: string, chat: ImageGenerationChat) =>
-                    set((state) => ({
-                        imageChats: state.imageChats.map((existingChat) =>
-                            existingChat.id === chatId ? chat : existingChat
-                        )
-                    }))
-            })
-        ),
-        {
-            name: "user-image-chats",
             storage: storage
         }
     )

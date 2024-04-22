@@ -1,9 +1,8 @@
 import { useRef } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { BsSend } from "react-icons/bs";
 import { FaCircleInfo } from "react-icons/fa6";
 import { twMerge } from "tailwind-merge";
 
+import MessageInput from "@/components/MessageInput/MessageInput";
 import { GenerationChat } from "@/types/chats";
 
 import ChatMessageContainer from "./ChatMessageContainer";
@@ -18,10 +17,6 @@ interface ChatWindowProps {
     topLeftComponent?: React.ReactNode;
 }
 
-interface FormData {
-    message: string;
-}
-
 export default function ChatWindow({
     className,
     maxResponses,
@@ -30,14 +25,10 @@ export default function ChatWindow({
     sendChatMessage,
     topLeftComponent
 }: ChatWindowProps) {
-    const { register, handleSubmit, reset } = useForm<FormData>();
-
     const bottomRef = useRef<HTMLDivElement>(null);
 
-    const onSubmit: SubmitHandler<FormData> = async (data) => {
-        reset();
-
-        await sendChatMessage(data.message);
+    const onSubmitMessage = async (message: string) => {
+        await sendChatMessage(message);
 
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     };
@@ -76,27 +67,7 @@ export default function ChatWindow({
                     </span>
                 </div>
             ) : (
-                <>
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className="flex flex-row items-center justify-center fixed w-full bottom-6"
-                    >
-                        <textarea
-                            className="textarea textarea-bordered w-1/2"
-                            placeholder="Send your message"
-                            {...register("message")}
-                            onKeyDown={async (e) => {
-                                if (e.key === "Enter" && !e.shiftKey) {
-                                    e.preventDefault();
-                                    await handleSubmit(onSubmit)();
-                                }
-                            }}
-                        />
-                        <button className="btn btn-primary ml-2" type="submit">
-                            <BsSend size="1rem" />
-                        </button>
-                    </form>
-                </>
+                <MessageInput onSubmitMessage={onSubmitMessage} />
             )}
         </div>
     );

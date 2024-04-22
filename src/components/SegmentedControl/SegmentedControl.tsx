@@ -7,19 +7,24 @@ interface Segment {
 }
 
 interface SegmentedControlProps {
+    className?: string;
     segments: Segment[];
     value: string | number;
     onValueChange: (value: string | number) => void;
     disabled?: boolean;
 }
 
-export default function SegmentedControl({ segments, value, onValueChange, disabled }: SegmentedControlProps) {
+export default function SegmentedControl({
+    className,
+    segments,
+    value,
+    onValueChange,
+    disabled
+}: SegmentedControlProps) {
     const controlId = useId();
 
-    console.log(disabled);
-
     return (
-        <div className="flex flex-wrap mt-2 justify-center">
+        <div className={twMerge("flex flex-wrap mt-2", className)}>
             {segments.map((segment, index) => (
                 <label key={index}>
                     <input

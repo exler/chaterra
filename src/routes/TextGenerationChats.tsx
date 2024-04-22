@@ -6,7 +6,7 @@ import ChatWindow from "@/components/ChatWindow/ChatWindow";
 import SegmentedControl from "@/components/SegmentedControl/SegmentedControl";
 import { useTextGenerationChatsStore } from "@/stores/userChats";
 import { useUserSettingsStore } from "@/stores/userSettings";
-import { GenerationChat, Model } from "@/types/chats";
+import { GenerationChat, TextGenerationModel } from "@/types/chats";
 import { getChatTitleFromMessage } from "@/utils/chats";
 import { createOpenAIClient, generateTextWithOpenAI } from "@/utils/openai";
 
@@ -17,13 +17,13 @@ export default function TextGenerationChats() {
     const openAIApiKey = useUserSettingsStore((state) => state.openAIApiKey);
     const openAIClient = createOpenAIClient(openAIApiKey);
 
-    const [chatModel, setChatModel] = useState<Model>(Model.GPT35TURBO);
+    const [chatModel, setChatModel] = useState<TextGenerationModel>(TextGenerationModel.GPT35TURBO);
 
     useEffect(() => {
         if (activeChat) {
             setChatModel(activeChat.model);
         } else {
-            setChatModel(Model.GPT35TURBO);
+            setChatModel(TextGenerationModel.GPT35TURBO);
         }
     }, [activeChat]);
 
@@ -78,11 +78,12 @@ export default function TextGenerationChats() {
                 sendChatMessage={sendChatMessage}
                 topLeftComponent={
                     <SegmentedControl
+                        className="justify-center"
                         value={chatModel}
-                        onValueChange={(value: string | number) => setChatModel(value as Model)}
+                        onValueChange={(value: string | number) => setChatModel(value as TextGenerationModel)}
                         segments={[
-                            { label: "GPT-3.5", value: Model.GPT35TURBO },
-                            { label: "GPT-4", value: Model.GPT4 }
+                            { label: "GPT-3.5", value: TextGenerationModel.GPT35TURBO },
+                            { label: "GPT-4", value: TextGenerationModel.GPT4 }
                         ]}
                         disabled={!!activeChat}
                     />
