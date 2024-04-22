@@ -53,6 +53,18 @@ export default function Settings() {
                                 <FaKey size="1rem" />
                                 <input type="text" className="grow" {...register("openAIApiKey")} />
                             </div>
+                            <span className="text-xs mt-2">
+                                API key can be obtained from the{" "}
+                                <a
+                                    href="https://platform.openai.com/api-keys"
+                                    className="link"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    OpenAI Platform
+                                </a>
+                                .
+                            </span>
                         </label>
 
                         <button type="submit" className="btn btn-sm btn-primary">
