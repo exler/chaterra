@@ -1,19 +1,14 @@
-import { twJoin } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 
-import { ChatMessage } from "@/types/chats";
+interface ChatMessageContainerProps {
+    className?: string;
+    children: React.ReactNode;
+}
 
-export default function ChatMessageContainer({ chatMessage }: { chatMessage: ChatMessage }) {
+export default function ChatMessageContainer({ className, children }: ChatMessageContainerProps) {
     return (
-        <div className={twJoin("chat w-fit max-w-xl", chatMessage.userMessage ? "ml-auto chat-end" : "chat-start")}>
-            <div className="chat-bubble">
-                {chatMessage.imageURL && (
-                    <figure>
-                        <img src={chatMessage.imageURL} width="256" height="256" alt="" />
-                    </figure>
-                )}
-
-                <p className="whitespace-pre-wrap">{chatMessage.text}</p>
-            </div>
+        <div className={twMerge("chat w-fit max-w-xl", className)}>
+            <div className="chat-bubble">{children}</div>
         </div>
     );
 }

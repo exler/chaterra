@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 
 import ChatsMenu from "@/components/ChatsMenu/ChatsMenu";
@@ -6,8 +5,7 @@ import ChatWindow from "@/components/ChatWindow/ChatWindow";
 import SegmentedControl from "@/components/SegmentedControl/SegmentedControl";
 import { useTextGenerationChatsStore } from "@/stores/userChats";
 import { useUserSettingsStore } from "@/stores/userSettings";
-import { GenerationChat, TextGenerationModel } from "@/types/chats";
-import { getChatTitleFromMessage } from "@/utils/chats";
+import { ChatMessage, TextGenerationModel } from "@/types/chats";
 import { createOpenAIClient, generateTextWithOpenAI } from "@/utils/openai";
 
 export default function TextGenerationChats() {
@@ -27,11 +25,11 @@ export default function TextGenerationChats() {
         }
     }, [activeChat]);
 
-    const sendChatMessage = async (message: string) => {
+    const getAIChatResponse = async (messages: ChatMessage[]) => {
         // `as const` required due to TypeScript
         // extending `role: "user"` to `role: string`
-        const prevMessages =
-            activeChat?.messages.map(
+        const messagesForOpenAI =
+            messages.map(
                 (chatMessage) =>
                     ({
                         role: chatMessage.userMessage ? "user" : "assistant",
@@ -39,33 +37,8 @@ export default function TextGenerationChats() {
                     }) as const
             ) ?? [];
 
-        const openAITextResponse = await generateTextWithOpenAI(openAIClient, chatModel, [
-            ...prevMessages,
-            { role: "user", content: message }
-        ]);
-
-        if (activeChat) {
-            updateChat(activeChat.id, {
-                ...activeChat,
-                messages: [
-                    ...activeChat.messages,
-                    { text: message, userMessage: true },
-                    { text: openAITextResponse, userMessage: false }
-                ]
-            });
-        } else {
-            const newId = nanoid();
-            addChat({
-                id: newId,
-                title: getChatTitleFromMessage(message),
-                model: chatModel,
-                messages: [
-                    { text: message, userMessage: true },
-                    { text: openAITextResponse, userMessage: false }
-                ]
-            });
-            setActiveChatId(newId);
-        }
+        const openAIChatResponse = await generateTextWithOpenAI(openAIClient, chatModel, messagesForOpenAI);
+        return openAIChatResponse;
     };
 
     return (
@@ -73,9 +46,12 @@ export default function TextGenerationChats() {
             <ChatsMenu chats={textChats} setActiveChatId={setActiveChatId} removeChat={removeChat} />
             <ChatWindow
                 className="col-span-4"
+                chatModel={chatModel}
                 activeChat={activeChat}
-                updateChat={updateChat as (chatId: string, chat: GenerationChat) => void}
-                sendChatMessage={sendChatMessage}
+                setActiveChatId={setActiveChatId}
+                addChat={addChat}
+                updateChat={updateChat}
+                getAIChatResponse={getAIChatResponse}
                 topLeftComponent={
                     <SegmentedControl
                         className="justify-center"
