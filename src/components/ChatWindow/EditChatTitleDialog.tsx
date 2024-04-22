@@ -22,7 +22,7 @@ export default function EditChatTitleDialog({ currentTitle, activeChat, updateCh
         }
     });
 
-    const form = useRef<HTMLFormElement>(null);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         reset();
@@ -38,11 +38,11 @@ export default function EditChatTitleDialog({ currentTitle, activeChat, updateCh
             modalTitle="Edit chat title"
             triggerContent={<FaPenToSquare size="1rem" />}
             actionButtonLabel="Save"
-            onActionButtonClick={() => {
-                form.current?.submit();
+            onActionButtonClick={async () => {
+                await handleSubmit(onSubmit)();
             }}
         >
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+            <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
                 <label className="form-control">
                     <div className="label">
                         <span className="label-text">Title</span>
