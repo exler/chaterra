@@ -3,6 +3,7 @@ import SideMenu from "@/components/SideMenu/SideMenu";
 import { ImageGenerationAspectRatio, ImageGenerationQuality } from "@/types/chats";
 
 interface ImagesMenuProps {
+    className?: string;
     imageQuality: ImageGenerationQuality;
     setImageQuality: (imageQuality: ImageGenerationQuality) => void;
     imageAspectRatio: ImageGenerationAspectRatio;
@@ -12,6 +13,7 @@ interface ImagesMenuProps {
 }
 
 export default function ImagesMenu({
+    className,
     imageQuality,
     setImageQuality,
     imageAspectRatio,
@@ -20,9 +22,9 @@ export default function ImagesMenu({
     setNumberOfImages
 }: ImagesMenuProps) {
     return (
-        <SideMenu>
+        <SideMenu className={className}>
             <>
-                <div className="divider divider-primary pr-4 lg:pr-0"></div>
+                <div className="divider divider-primary"></div>
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2">
                         <label>Quality</label>

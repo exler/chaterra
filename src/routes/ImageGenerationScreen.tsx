@@ -32,6 +32,7 @@ export default function ImageGenerationScreen() {
     return (
         <div className="lg:grid lg:grid-cols-5">
             <ImagesMenu
+                className="pr-4 lg:pr-0"
                 imageQuality={imageQuality}
                 setImageQuality={setImageQuality}
                 imageAspectRatio={imageAspectRatio}
