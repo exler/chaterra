@@ -40,7 +40,11 @@ export default function ImageGenerationScreen() {
                 numberOfImages={numberOfImages}
                 setNumberOfImages={setNumberOfImages}
             />
-            <ImageWindow className="col-span-4 mt-16 lg:mt-0" generateImage={generateImage} />
+            <ImageWindow
+                className="col-span-4 mt-16 lg:mt-0"
+                missingApiKey={!openAIApiKey}
+                generateImage={generateImage}
+            />
         </div>
     );
 }

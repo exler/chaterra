@@ -52,6 +52,7 @@ export default function TextGenerationChats() {
             />
             <ChatWindow
                 className={twMerge("col-span-4 hidden lg:flex", activeChat && "flex")}
+                missingApiKey={!openAIApiKey}
                 chatModel={chatModel}
                 activeChat={activeChat}
                 setActiveChatId={setActiveChatId}

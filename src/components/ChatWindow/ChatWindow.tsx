@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { useRef, useState } from "react";
-import { FaCircleInfo } from "react-icons/fa6";
+import { IoWarningOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 import MessageInput from "@/components/MessageInput/MessageInput";
@@ -12,7 +13,7 @@ import EditChatTitleDialog from "./EditChatTitleDialog";
 
 interface ChatWindowProps {
     className?: string;
-    maxResponses?: number;
+    missingApiKey?: boolean;
     chatModel: TextGenerationModel;
     activeChat?: TextGenerationChat | null;
     setActiveChatId: (activeChatId: string | null) => void;
@@ -24,7 +25,7 @@ interface ChatWindowProps {
 
 export default function ChatWindow({
     className,
-    maxResponses,
+    missingApiKey,
     chatModel,
     activeChat,
     setActiveChatId,
@@ -130,12 +131,12 @@ export default function ChatWindow({
                 </div>
             </div>
 
-            {maxResponses && activeChat && activeChat.messages.length >= maxResponses ? (
-                <div className="alert alert-info w-1/2 fixed bottom-6">
-                    <FaCircleInfo size="1rem" />
+            {missingApiKey ? (
+                <div className="alert alert-warning w-1/2 fixed bottom-6">
+                    <IoWarningOutline size="1rem" />
                     <span>
-                        This chat only supports {maxResponses} {maxResponses > 1 ? "responses" : "response"} from the
-                        AI.
+                        You need to set your OpenAI API key in the <Link to="/settings">settings</Link> to use this
+                        feature.
                     </span>
                 </div>
             ) : (

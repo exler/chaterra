@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { FaImage } from "react-icons/fa6";
+import { IoWarningOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 import MessageInput from "@/components/MessageInput/MessageInput";
 
-interface ChatWindowProps {
+interface ImageWindowProps {
     className?: string;
+    missingApiKey?: boolean;
     generateImage: (message: string) => Promise<string[]>;
 }
 
-export default function ImageWindow({ className, generateImage }: ChatWindowProps) {
+export default function ImageWindow({ className, missingApiKey, generateImage }: ImageWindowProps) {
     const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState<string[]>([]);
 
@@ -43,6 +46,14 @@ export default function ImageWindow({ className, generateImage }: ChatWindowProp
                     <button type="button" className="btn btn-primary" onClick={() => setImages([])}>
                         Generate a new image
                     </button>
+                </div>
+            ) : missingApiKey ? (
+                <div className="alert alert-warning w-1/2 fixed bottom-6">
+                    <IoWarningOutline size="1rem" />
+                    <span>
+                        You need to set your OpenAI API key in the <Link to="/settings">settings</Link> to use this
+                        feature.
+                    </span>
                 </div>
             ) : (
                 <>
