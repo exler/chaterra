@@ -45,7 +45,8 @@ export default function ChatWindow({
         let messages;
         let activeChatLocal;
 
-        const base64EncodedImage = imageList.length > 0 ? await base64EncodeImage(imageList[0]) : undefined;
+        const base64EncodedImage =
+            imageList && imageList.length > 0 ? await base64EncodeImage(imageList[0]) : undefined;
 
         if (activeChat) {
             chatId = activeChat.id;
