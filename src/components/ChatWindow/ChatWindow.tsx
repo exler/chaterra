@@ -7,6 +7,7 @@ import { twMerge } from "tailwind-merge";
 import MessageInput from "@/components/MessageInput/MessageInput";
 import { ChatMessage, GenerationChat, TextGenerationChat, TextGenerationModel } from "@/types/chats";
 import { getChatTitleFromMessage } from "@/utils/chats";
+import { base64EncodeImage } from "@/utils/encode";
 
 import ChatMessageContainer from "./ChatMessageContainer";
 import EditChatTitleDialog from "./EditChatTitleDialog";
@@ -38,15 +39,17 @@ export default function ChatWindow({
 
     const bottomRef = useRef<HTMLDivElement>(null);
 
-    const onSubmitMessage = async (message: string) => {
+    const onFormSubmit = async ({ message, imageList }: { message: string; imageList: FileList }) => {
         // Have to store this locally as the activeChat is hydrating
         let chatId;
         let messages;
         let activeChatLocal;
 
+        const base64EncodedImage = imageList.length > 0 ? await base64EncodeImage(imageList[0]) : undefined;
+
         if (activeChat) {
             chatId = activeChat.id;
-            messages = [...activeChat.messages, { text: message, userMessage: true }];
+            messages = [...activeChat.messages, { text: message, userMessage: true, imageURL: base64EncodedImage }];
             activeChatLocal = activeChat;
 
             updateChat(chatId, {
@@ -55,7 +58,7 @@ export default function ChatWindow({
             });
         } else {
             chatId = nanoid();
-            messages = [{ text: message, userMessage: true }];
+            messages = [{ text: message, userMessage: true, imageURL: base64EncodedImage }];
             activeChatLocal = {
                 id: chatId,
                 title: getChatTitleFromMessage(message),
@@ -140,7 +143,11 @@ export default function ChatWindow({
                     </span>
                 </div>
             ) : (
-                <MessageInput onSubmitMessage={onSubmitMessage} />
+                <MessageInput
+                    showImageUpload={true}
+                    allowImageUpload={chatModel === TextGenerationModel.GPT4TURBO}
+                    onFormSubmit={onFormSubmit}
+                />
             )}
         </div>
     );

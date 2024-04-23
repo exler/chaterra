@@ -34,10 +34,16 @@ export default function TextGenerationChats() {
                 (chatMessage) =>
                     ({
                         role: chatMessage.userMessage ? "user" : "assistant",
-                        content: chatMessage.text ?? ""
+                        content: [
+                            { type: "text", text: chatMessage.text ?? "" },
+                            ...(chatMessage.imageURL
+                                ? [{ type: "image_url", image_url: { url: chatMessage.imageURL } }]
+                                : [])
+                        ]
                     }) as const
             ) ?? [];
 
+        // @ts-expect-error TypeScript is complaining about missing `name` property which is not required
         const openAIChatResponse = await generateTextWithOpenAI(openAIClient, chatModel, messagesForOpenAI);
         return openAIChatResponse;
     };
@@ -66,7 +72,7 @@ export default function TextGenerationChats() {
                         onValueChange={(value: string | number) => setChatModel(value as TextGenerationModel)}
                         segments={[
                             { label: "GPT-3.5", value: TextGenerationModel.GPT35TURBO },
-                            { label: "GPT-4", value: TextGenerationModel.GPT4 }
+                            { label: "GPT-4", value: TextGenerationModel.GPT4TURBO }
                         ]}
                         disabled={!!activeChat}
                     />

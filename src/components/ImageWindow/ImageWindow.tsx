@@ -16,7 +16,7 @@ export default function ImageWindow({ className, missingApiKey, generateImage }:
     const [isLoading, setIsLoading] = useState(false);
     const [images, setImages] = useState<string[]>([]);
 
-    const onSubmitMessage = async (message: string) => {
+    const onFormSubmit = async ({ message }: { message: string }) => {
         setIsLoading(true);
 
         setImages(await generateImage(message));
@@ -63,7 +63,7 @@ export default function ImageWindow({ className, missingApiKey, generateImage }:
                             Describe the image you want to have generated
                         </span>
                     </div>
-                    <MessageInput onSubmitMessage={onSubmitMessage} />
+                    <MessageInput showImageUpload={false} onFormSubmit={onFormSubmit} />
                 </>
             )}
         </div>
