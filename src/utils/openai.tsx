@@ -19,7 +19,7 @@ export const generateTextWithOpenAI = async (
     return chatCompletion.choices[0].message.content ?? "";
 };
 
-export const generateImageWithOpenAI = async (
+export const generateImagesWithOpenAI = async (
     client: OpenAI,
     model: string,
     prompt: string,
@@ -27,12 +27,21 @@ export const generateImageWithOpenAI = async (
     quality?: "standard" | "hd",
     size?: "1024x1024" | "1792x1024" | "1024x1792" | null
 ) => {
-    const response = await client.images.generate({
-        model: model,
-        prompt: prompt,
-        n: n,
-        quality: quality,
-        size: size
-    });
-    return response.data[0].url ?? "";
+    // DALL-E-3 model only supports n=1
+    // so we have to make parallel requests for n > 1
+    const images = await Promise.all(
+        Array.from({ length: n ?? 1 }, async () => {
+            const response = await client.images.generate({
+                model: model,
+                prompt: prompt,
+                n: 1,
+                quality: quality,
+                size: size
+            });
+
+            return response.data[0].url!;
+        })
+    );
+
+    return images;
 };

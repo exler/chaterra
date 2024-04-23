@@ -6,17 +6,17 @@ import MessageInput from "@/components/MessageInput/MessageInput";
 
 interface ChatWindowProps {
     className?: string;
-    generateImage: (message: string) => Promise<string>;
+    generateImage: (message: string) => Promise<string[]>;
 }
 
 export default function ImageWindow({ className, generateImage }: ChatWindowProps) {
     const [isLoading, setIsLoading] = useState(false);
-    const [imageURL, setImageURL] = useState<string>("");
+    const [images, setImages] = useState<string[]>([]);
 
     const onSubmitMessage = async (message: string) => {
         setIsLoading(true);
 
-        setImageURL(await generateImage(message));
+        setImages(await generateImage(message));
 
         setIsLoading(false);
     };
@@ -26,12 +26,21 @@ export default function ImageWindow({ className, generateImage }: ChatWindowProp
             {isLoading ? (
                 <>
                     <span className="loading loading-ball loading-lg"></span>
-                    <span className="font-bold text-lg text-center">Generating the image...</span>
+                    <span className="font-bold text-lg text-center">Generating images...</span>
                 </>
-            ) : imageURL ? (
+            ) : images.length > 0 ? (
                 <div className="flex flex-col gap-4">
-                    <img src={imageURL} alt="Generated image" className="rounded-lg object-cover w-full h-96" />
-                    <button type="button" className="btn btn-primary" onClick={() => setImageURL("")}>
+                    <div className="grid grid-cols-2 gap-4">
+                        {images.map((imageURL, index) => (
+                            <img
+                                key={index}
+                                src={imageURL}
+                                alt={`Generated image ${index + 1}`}
+                                className={twMerge("rounded-lg object-cover w-full h-96", images.length > 2 && "h-48")}
+                            />
+                        ))}
+                    </div>
+                    <button type="button" className="btn btn-primary" onClick={() => setImages([])}>
                         Generate a new image
                     </button>
                 </div>

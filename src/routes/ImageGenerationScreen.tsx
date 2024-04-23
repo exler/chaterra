@@ -4,28 +4,29 @@ import ImagesMenu from "@/components/ImagesMenu/ImagesMenu";
 import ImageWindow from "@/components/ImageWindow/ImageWindow";
 import { useUserSettingsStore } from "@/stores/userSettings";
 import { ImageGenerationAspectRatio, ImageGenerationQuality } from "@/types/chats";
-import { createOpenAIClient, generateImageWithOpenAI } from "@/utils/openai";
+import { createOpenAIClient, generateImagesWithOpenAI } from "@/utils/openai";
 
 export default function ImageGenerationScreen() {
     const [imageQuality, setImageQuality] = useState<ImageGenerationQuality>(ImageGenerationQuality.STANDARD);
     const [imageAspectRatio, setImageAspectRatio] = useState<ImageGenerationAspectRatio>(
         ImageGenerationAspectRatio.SQUARE
     );
+    const [numberOfImages, setNumberOfImages] = useState<number>(1);
 
     const openAIApiKey = useUserSettingsStore((state) => state.openAIApiKey);
     const openAIClient = createOpenAIClient(openAIApiKey);
 
     const generateImage = async (message: string) => {
-        const openAIImageURL = await generateImageWithOpenAI(
+        const openAIImages = await generateImagesWithOpenAI(
             openAIClient,
             "dall-e-3",
             message,
-            1,
+            numberOfImages,
             imageQuality,
             imageAspectRatio
         );
 
-        return openAIImageURL;
+        return openAIImages;
     };
 
     return (
@@ -35,6 +36,8 @@ export default function ImageGenerationScreen() {
                 setImageQuality={setImageQuality}
                 imageAspectRatio={imageAspectRatio}
                 setImageAspectRatio={setImageAspectRatio}
+                numberOfImages={numberOfImages}
+                setNumberOfImages={setNumberOfImages}
             />
             <ImageWindow className="col-span-4 mt-16 lg:mt-0" generateImage={generateImage} />
         </div>
