@@ -29,7 +29,7 @@ export default function MessageInput({ showImageUpload = false, allowImageUpload
     const imageList = watch("imageList");
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="fixed w-1/2 bottom-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="fixed w-2/3 lg:w-1/2 bottom-6">
             <div className="flex flex-col items-center gap-2">
                 <div className="flex flex-row items-center w-full">
                     <textarea

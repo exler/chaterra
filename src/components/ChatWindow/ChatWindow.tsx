@@ -22,6 +22,7 @@ interface ChatWindowProps {
     updateChat: (chatId: string, chat: TextGenerationChat) => void;
     getAIChatResponse: (messages: ChatMessage[]) => Promise<string>;
     topLeftComponent?: React.ReactNode;
+    setForceChatWindow: (forceChatWindow: boolean) => void;
 }
 
 export default function ChatWindow({
@@ -33,7 +34,8 @@ export default function ChatWindow({
     addChat,
     updateChat,
     getAIChatResponse,
-    topLeftComponent
+    topLeftComponent,
+    setForceChatWindow
 }: ChatWindowProps) {
     const [waitingForResponse, setWaitingForResponse] = useState(false);
 
@@ -92,7 +94,10 @@ export default function ChatWindow({
                     {topLeftComponent}
                     <button
                         type="button"
-                        onClick={() => setActiveChatId(null)}
+                        onClick={() => {
+                            setActiveChatId(null);
+                            setForceChatWindow(false);
+                        }}
                         className="btn btn-neutral btn-sm lg:hidden"
                     >
                         Go back

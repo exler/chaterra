@@ -24,7 +24,7 @@ export default function ImagesMenu({
     return (
         <SideMenu className={className}>
             <>
-                <div className="divider divider-primary"></div>
+                <div className="divider divider-primary my-2"></div>
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2">
                         <label>Quality</label>

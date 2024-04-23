@@ -41,7 +41,7 @@ export default function ImageGenerationScreen() {
                 setNumberOfImages={setNumberOfImages}
             />
             <ImageWindow
-                className="col-span-4 mt-16 lg:mt-0"
+                className="col-span-4 mt-8 lg:mt-0"
                 missingApiKey={!openAIApiKey}
                 generateImage={generateImage}
             />

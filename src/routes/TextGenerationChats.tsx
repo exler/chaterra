@@ -10,6 +10,9 @@ import { ChatMessage, TextGenerationModel } from "@/types/chats";
 import { createOpenAIClient, generateTextWithOpenAI } from "@/utils/openai";
 
 export default function TextGenerationChats() {
+    // For mobile view, we need an additional state to control whether we show the chat window or not
+    const [forceChatWindow, setForceChatWindow] = useState(false);
+
     const { textChats, activeChatId, setActiveChatId, addChat, updateChat, removeChat } = useTextGenerationChatsStore();
     const activeChat = textChats.find((chat) => chat.id === activeChatId);
 
@@ -51,13 +54,14 @@ export default function TextGenerationChats() {
     return (
         <div className="lg:grid lg:grid-cols-5">
             <ChatsMenu
-                className={twMerge("pr-4 lg:pr-0", activeChat && "hidden lg:flex")}
+                className={twMerge("pr-4 lg:pr-0", (activeChat ?? forceChatWindow) && "hidden lg:flex")}
                 chats={textChats}
                 setActiveChatId={setActiveChatId}
                 removeChat={removeChat}
+                setForceChatWindow={setForceChatWindow}
             />
             <ChatWindow
-                className={twMerge("col-span-4 hidden lg:flex", activeChat && "flex")}
+                className={twMerge("col-span-4 hidden lg:flex", (activeChat ?? forceChatWindow) && "flex")}
                 missingApiKey={!openAIApiKey}
                 chatModel={chatModel}
                 activeChat={activeChat}
@@ -77,6 +81,7 @@ export default function TextGenerationChats() {
                         disabled={!!activeChat}
                     />
                 }
+                setForceChatWindow={setForceChatWindow}
             />
         </div>
     );

@@ -11,13 +11,20 @@ interface ChatsMenuProps {
     chats: GenerationChat[];
     setActiveChatId: (activeChatId: string | null) => void;
     removeChat: (chatId: string) => void;
+    setForceChatWindow: (forceChatWindow: boolean) => void;
 }
 
 interface FormData {
     searchInput: string;
 }
 
-export default function ChatsMenu({ className, chats, setActiveChatId, removeChat }: ChatsMenuProps) {
+export default function ChatsMenu({
+    className,
+    chats,
+    setActiveChatId,
+    removeChat,
+    setForceChatWindow
+}: ChatsMenuProps) {
     const { register, watch } = useForm<FormData>();
 
     const searchInput = watch("searchInput");
@@ -34,11 +41,18 @@ export default function ChatsMenu({ className, chats, setActiveChatId, removeCha
                         {...register("searchInput")}
                     />
                 </label>
-                <button type="button" className="btn btn-primary btn-sm ml-2" onClick={() => setActiveChatId(null)}>
+                <button
+                    type="button"
+                    className="btn btn-primary btn-sm ml-2"
+                    onClick={() => {
+                        setActiveChatId(null);
+                        setForceChatWindow(true);
+                    }}
+                >
                     <FaCirclePlus size="0.8rem" />
                 </button>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 overflow-y-scroll h-full lg:h-[36rem]">
                 {chats.map((chat) => {
                     if (searchInput && !chat.title.toLowerCase().includes(searchInput.toLowerCase())) {
                         return null;
