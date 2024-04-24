@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaPenToSquare } from "react-icons/fa6";
 
@@ -21,6 +21,12 @@ export default function EditChatTitleDialog({ currentTitle, activeChat, updateCh
             title: currentTitle
         }
     });
+
+    useEffect(() => {
+        reset({
+            title: currentTitle
+        });
+    }, [currentTitle, reset]);
 
     const formRef = useRef<HTMLFormElement>(null);
 
