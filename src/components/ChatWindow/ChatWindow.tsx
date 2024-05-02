@@ -105,7 +105,9 @@ export default function ChatWindow({
                 </div>
 
                 <div className="flex flex-row gap-4 items-center justify-center col-span-3 col-start-2">
-                    <h1 className="font-bold text-xl text-center">{activeChat?.title ?? "Start a new conversation"}</h1>
+                    <h1 className="font-bold text-xl text-center mt-2 lg:mt-0">
+                        {activeChat?.title ?? "Start a new conversation"}
+                    </h1>
                     {activeChat && (
                         <EditChatTitleDialog
                             currentTitle={activeChat.title}
