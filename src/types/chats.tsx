@@ -6,7 +6,7 @@ export interface ChatMessage {
 
 export enum TextGenerationModel {
     GPT35TURBO = "gpt-3.5-turbo",
-    GPT4TURBO = "gpt-4-turbo"
+    GPT4OMNI = "gpt-4o"
 }
 
 export enum ImageGenerationAspectRatio {

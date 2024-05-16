@@ -76,7 +76,7 @@ export default function TextGenerationChats() {
                         onValueChange={(value: string | number) => setChatModel(value as TextGenerationModel)}
                         segments={[
                             { label: "GPT-3.5", value: TextGenerationModel.GPT35TURBO },
-                            { label: "GPT-4", value: TextGenerationModel.GPT4TURBO }
+                            { label: "GPT-4o", value: TextGenerationModel.GPT4OMNI }
                         ]}
                         disabled={!!activeChat}
                     />

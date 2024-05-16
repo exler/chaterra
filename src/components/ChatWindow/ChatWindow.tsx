@@ -153,7 +153,7 @@ export default function ChatWindow({
             ) : (
                 <MessageInput
                     showImageUpload={true}
-                    allowImageUpload={chatModel === TextGenerationModel.GPT4TURBO}
+                    allowImageUpload={chatModel === TextGenerationModel.GPT4OMNI}
                     onFormSubmit={onFormSubmit}
                 />
             )}
