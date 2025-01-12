@@ -63,6 +63,11 @@ export default function ChatsMenu({
                             className="card card-compact bg-neutral cursor-pointer hover:bg-gray-700"
                             key={chat.id}
                             onClick={() => setActiveChatId(chat.id)}
+                            onKeyUp={(e) => {
+                                if (e.key === "Enter" || e.key === " ") {
+                                    setActiveChatId(chat.id);
+                                }
+                            }}
                         >
                             <div className="card-body flex flex-row justify-between items-center">
                                 <span>{chat.title}</span>

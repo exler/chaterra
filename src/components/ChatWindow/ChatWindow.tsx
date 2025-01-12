@@ -43,16 +43,19 @@ export default function ChatWindow({
 
     const onFormSubmit = async ({ message, imageList }: { message: string; imageList: FileList }) => {
         // Have to store this locally as the activeChat is hydrating
-        let chatId;
-        let messages;
-        let activeChatLocal;
+        let chatId: string;
+        let messages: ChatMessage[];
+        let activeChatLocal: TextGenerationChat;
 
         const base64EncodedImage =
             imageList && imageList.length > 0 ? await base64EncodeImage(imageList[0]) : undefined;
 
         if (activeChat) {
             chatId = activeChat.id;
-            messages = [...activeChat.messages, { text: message, userMessage: true, imageURL: base64EncodedImage }];
+            messages = [
+                ...activeChat.messages,
+                { id: nanoid(), text: message, userMessage: true, imageURL: base64EncodedImage },
+            ];
             activeChatLocal = activeChat;
 
             updateChat(chatId, {
@@ -61,7 +64,7 @@ export default function ChatWindow({
             });
         } else {
             chatId = nanoid();
-            messages = [{ text: message, userMessage: true, imageURL: base64EncodedImage }];
+            messages = [{ id: nanoid(), text: message, userMessage: true, imageURL: base64EncodedImage }];
             activeChatLocal = {
                 id: chatId,
                 title: getChatTitleFromMessage(message),
@@ -81,7 +84,7 @@ export default function ChatWindow({
 
         updateChat(chatId, {
             ...activeChatLocal,
-            messages: [...messages, { text: openAITextResponse, userMessage: false }],
+            messages: [...messages, { id: nanoid(), text: openAITextResponse, userMessage: false }],
         });
 
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -119,9 +122,9 @@ export default function ChatWindow({
             </div>
             <div className="w-full h-[38rem] overflow-y-scroll">
                 <div className="flex flex-col gap-4 lg:mx-8 pb-14">
-                    {activeChat?.messages.map((chatMessage, index) => (
+                    {activeChat?.messages.map((chatMessage) => (
                         <ChatMessageContainer
-                            key={index}
+                            key={chatMessage.id}
                             className={chatMessage.userMessage ? "ml-auto chat-end" : "chat-start"}
                         >
                             {chatMessage.imageURL && (
@@ -135,7 +138,7 @@ export default function ChatWindow({
                     ))}
                     {waitingForResponse && (
                         <ChatMessageContainer className="chat-start">
-                            <span className="loading loading-dots loading-md"></span>
+                            <span className="loading loading-dots loading-md" />
                         </ChatMessageContainer>
                     )}
                     <div ref={bottomRef} />

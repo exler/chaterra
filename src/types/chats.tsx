@@ -1,4 +1,5 @@
 export interface ChatMessage {
+    id: string;
     imageURL?: string;
     text?: string;
     userMessage: boolean;

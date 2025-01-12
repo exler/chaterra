@@ -26,7 +26,7 @@ export default function SegmentedControl({
     return (
         <div className={twMerge("flex flex-wrap", disabled && "opacity-50", className)}>
             {segments.map((segment, index) => (
-                <label key={index}>
+                <label key={segment.value}>
                     <input
                         type="radio"
                         name={controlId}

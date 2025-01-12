@@ -24,10 +24,10 @@ export default function ImagesMenu({
     return (
         <SideMenu className={className}>
             <>
-                <div className="divider divider-primary my-2"></div>
+                <div className="divider divider-primary my-2" />
                 <div className="flex flex-col gap-2">
                     <div className="flex flex-col gap-2">
-                        <label>Quality</label>
+                        <span>Quality</span>
                         <SegmentedControl
                             value={imageQuality}
                             onValueChange={(value: number | string) => setImageQuality(value as ImageGenerationQuality)}
@@ -38,7 +38,7 @@ export default function ImagesMenu({
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label>Aspect Ratio</label>
+                        <span>Aspect Ratio</span>
                         <SegmentedControl
                             value={imageAspectRatio}
                             onValueChange={(value: number | string) =>
@@ -52,7 +52,7 @@ export default function ImagesMenu({
                         />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <label>Number of generated images</label>
+                        <span>Number of generated images</span>
                         <SegmentedControl
                             value={numberOfImages}
                             onValueChange={(value: number | string) => setNumberOfImages(Number(value))}

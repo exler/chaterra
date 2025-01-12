@@ -28,7 +28,7 @@ export default function ImageWindow({ className, missingApiKey, generateImage }:
         <div className={twMerge("flex flex-col items-center justify-center w-full pr-4 lg:px-4", className)}>
             {isLoading ? (
                 <>
-                    <span className="loading loading-ball loading-lg"></span>
+                    <span className="loading loading-ball loading-lg" />
                     <span className="font-bold text-lg text-center">Generating images...</span>
                 </>
             ) : images.length > 0 ? (
@@ -36,9 +36,9 @@ export default function ImageWindow({ className, missingApiKey, generateImage }:
                     <div className="grid grid-cols-2 gap-4">
                         {images.map((imageURL, index) => (
                             <img
-                                key={index}
+                                key={imageURL}
                                 src={imageURL}
-                                alt={`Generated image ${index + 1}`}
+                                alt={`AI generation ${index + 1}`}
                                 className={twMerge("rounded-lg object-cover w-full h-96", images.length > 2 && "h-48")}
                             />
                         ))}

@@ -49,11 +49,11 @@ export default function Modal({
                     {modalTitle && <h3 className="font-bold text-lg mb-2">{modalTitle}</h3>}
                     {children}
                     <div className="modal-action">
-                        <button className="btn" onClick={closeModal}>
+                        <button type="button" className="btn" onClick={closeModal}>
                             Close
                         </button>
                         {actionButtonLabel && (
-                            <button className="btn btn-primary" onClick={handleActionButton}>
+                            <button type="button" className="btn btn-primary" onClick={handleActionButton}>
                                 {actionButtonLabel}
                             </button>
                         )}
