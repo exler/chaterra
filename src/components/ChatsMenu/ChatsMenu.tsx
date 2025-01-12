@@ -52,7 +52,7 @@ export default function ChatsMenu({
                     <FaCirclePlus size="0.8rem" />
                 </button>
             </div>
-            <div className="flex flex-col gap-2 overflow-y-scroll h-full lg:h-[36rem]">
+            <div className="flex flex-col gap-2 overflow-y-scroll h-dvh">
                 {chats.map((chat) => {
                     if (searchInput && !chat.title.toLowerCase().includes(searchInput.toLowerCase())) {
                         return null;

@@ -13,9 +13,15 @@ interface MessageInputProps {
     showImageUpload?: boolean;
     allowImageUpload?: boolean;
     onFormSubmit?: (data: FormData) => Promise<void>;
+    className?: string;
 }
 
-export default function MessageInput({ showImageUpload = false, allowImageUpload, onFormSubmit }: MessageInputProps) {
+export default function MessageInput({
+    showImageUpload = false,
+    allowImageUpload,
+    onFormSubmit,
+    className,
+}: MessageInputProps) {
     const { register, handleSubmit, reset, resetField, watch } = useForm<FormData>();
 
     const onSubmit = async (data: FormData) => {
@@ -29,7 +35,7 @@ export default function MessageInput({ showImageUpload = false, allowImageUpload
     const imageList = watch("imageList");
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="fixed w-2/3 lg:w-1/2 bottom-6">
+        <form onSubmit={handleSubmit(onSubmit)} className={className}>
             <div className="flex flex-col items-center gap-2">
                 <div className="flex flex-row items-center w-full">
                     <textarea
