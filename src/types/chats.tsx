@@ -6,7 +6,7 @@ export interface ChatMessage {
 }
 
 export enum TextGenerationModel {
-    GPT35TURBO = "gpt-3.5-turbo",
+    GPT4OMINI = "gpt-4o-mini",
     GPT4OMNI = "gpt-4o",
 }
 

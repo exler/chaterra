@@ -19,13 +19,13 @@ export default function TextGenerationChats() {
     const openAIApiKey = useUserSettingsStore((state) => state.openAIApiKey);
     const openAIClient = createOpenAIClient(openAIApiKey);
 
-    const [chatModel, setChatModel] = useState<TextGenerationModel>(TextGenerationModel.GPT35TURBO);
+    const [chatModel, setChatModel] = useState<TextGenerationModel>(TextGenerationModel.GPT4OMINI);
 
     useEffect(() => {
         if (activeChat) {
             setChatModel(activeChat.model);
         } else {
-            setChatModel(TextGenerationModel.GPT35TURBO);
+            setChatModel(TextGenerationModel.GPT4OMINI);
         }
     }, [activeChat]);
 
@@ -75,7 +75,7 @@ export default function TextGenerationChats() {
                         value={chatModel}
                         onValueChange={(value: string | number) => setChatModel(value as TextGenerationModel)}
                         segments={[
-                            { label: "GPT-3.5", value: TextGenerationModel.GPT35TURBO },
+                            { label: "GPT-4o mini", value: TextGenerationModel.GPT4OMINI },
                             { label: "GPT-4o", value: TextGenerationModel.GPT4OMNI },
                         ]}
                         disabled={!!activeChat}

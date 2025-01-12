@@ -5,7 +5,7 @@ import { Link } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import MessageInput from "@/components/MessageInput/MessageInput";
-import { type ChatMessage, type GenerationChat, type TextGenerationChat, TextGenerationModel } from "@/types/chats";
+import type { ChatMessage, GenerationChat, TextGenerationChat, TextGenerationModel } from "@/types/chats";
 import { getChatTitleFromMessage } from "@/utils/chats";
 import { base64EncodeImage } from "@/utils/encode";
 
@@ -163,11 +163,7 @@ export default function ChatWindow({
                         </span>
                     </div>
                 ) : (
-                    <MessageInput
-                        showImageUpload={true}
-                        allowImageUpload={chatModel === TextGenerationModel.GPT4OMNI}
-                        onFormSubmit={onFormSubmit}
-                    />
+                    <MessageInput showImageUpload={true} allowImageUpload={true} onFormSubmit={onFormSubmit} />
                 )}
             </div>
         </div>
