@@ -1,4 +1,4 @@
-import { StateStorage } from "zustand/middleware";
+import type { StateStorage } from "zustand/middleware";
 
 export const createLocalForageStorage = (instance: LocalForage): StateStorage => {
     return {
@@ -10,6 +10,6 @@ export const createLocalForageStorage = (instance: LocalForage): StateStorage =>
         },
         removeItem: async (name: string) => {
             await instance.removeItem(name);
-        }
+        },
     };
 };

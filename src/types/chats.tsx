@@ -6,18 +6,18 @@ export interface ChatMessage {
 
 export enum TextGenerationModel {
     GPT35TURBO = "gpt-3.5-turbo",
-    GPT4OMNI = "gpt-4o"
+    GPT4OMNI = "gpt-4o",
 }
 
 export enum ImageGenerationAspectRatio {
     SQUARE = "1024x1024",
     LANDSCAPE = "1792x1024",
-    PORTRAIT = "1024x1792"
+    PORTRAIT = "1024x1792",
 }
 
 export enum ImageGenerationQuality {
     STANDARD = "standard",
-    HD = "hd"
+    HD = "hd",
 }
 
 export interface GenerationChat {

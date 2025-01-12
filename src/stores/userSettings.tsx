@@ -7,22 +7,22 @@ import { createLocalForageStorage } from "@/utils/storage";
 const storeInstance = localForage.createInstance({
     driver: localForage.INDEXEDDB,
     name: "userSettings",
-    version: 1.0
+    version: 1.0,
 });
 
 export const useUserSettingsStore = create(
     persist(
         combine(
             {
-                openAIApiKey: ""
+                openAIApiKey: "",
             },
             (set) => ({
-                setOpenAIApiKey: (openAIApiKey: string) => set({ openAIApiKey })
-            })
+                setOpenAIApiKey: (openAIApiKey: string) => set({ openAIApiKey }),
+            }),
         ),
         {
             name: "user-settings",
-            storage: createJSONStorage(() => createLocalForageStorage(storeInstance))
-        }
-    )
+            storage: createJSONStorage(() => createLocalForageStorage(storeInstance)),
+        },
+    ),
 );

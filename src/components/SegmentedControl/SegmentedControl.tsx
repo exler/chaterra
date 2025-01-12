@@ -19,7 +19,7 @@ export default function SegmentedControl({
     segments,
     value,
     onValueChange,
-    disabled
+    disabled,
 }: SegmentedControlProps) {
     const controlId = useId();
 
@@ -41,7 +41,7 @@ export default function SegmentedControl({
                             "block cursor-pointer bg-neutral px-4 py-1 relative text-center tracking-wide peer-checked:bg-primary peer-checked:text-black",
                             index === 0 ? "rounded-l-md" : "",
                             index === segments.length - 1 ? "rounded-r-md" : "",
-                            disabled ? "cursor-not-allowed" : ""
+                            disabled ? "cursor-not-allowed" : "",
                         )}
                     >
                         {segment.label}

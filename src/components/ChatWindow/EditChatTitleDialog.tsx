@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { FaPenToSquare } from "react-icons/fa6";
 
 import Modal from "@/components/Modal/Modal";
-import { GenerationChat } from "@/types/chats";
+import type { GenerationChat } from "@/types/chats";
 
 interface EditChatTitleDialogProps {
     currentTitle: string;
@@ -18,13 +18,13 @@ interface FormData {
 export default function EditChatTitleDialog({ currentTitle, activeChat, updateChat }: EditChatTitleDialogProps) {
     const { register, handleSubmit, reset } = useForm<FormData>({
         defaultValues: {
-            title: currentTitle
-        }
+            title: currentTitle,
+        },
     });
 
     useEffect(() => {
         reset({
-            title: currentTitle
+            title: currentTitle,
         });
     }, [currentTitle, reset]);
 
@@ -35,7 +35,7 @@ export default function EditChatTitleDialog({ currentTitle, activeChat, updateCh
 
         updateChat(activeChat.id, {
             ...activeChat,
-            title: data.title
+            title: data.title,
         });
     };
 

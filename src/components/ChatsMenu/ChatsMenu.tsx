@@ -4,7 +4,7 @@ import { TiDeleteOutline } from "react-icons/ti";
 import { twMerge } from "tailwind-merge";
 
 import SideMenu from "@/components/SideMenu/SideMenu";
-import { GenerationChat } from "@/types/chats";
+import type { GenerationChat } from "@/types/chats";
 
 interface ChatsMenuProps {
     className?: string;
@@ -23,7 +23,7 @@ export default function ChatsMenu({
     chats,
     setActiveChatId,
     removeChat,
-    setForceChatWindow
+    setForceChatWindow,
 }: ChatsMenuProps) {
     const { register, watch } = useForm<FormData>();
 

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import ChatsMenu from "@/components/ChatsMenu/ChatsMenu";
 import ChatWindow from "@/components/ChatWindow/ChatWindow";
+import ChatsMenu from "@/components/ChatsMenu/ChatsMenu";
 import SegmentedControl from "@/components/SegmentedControl/SegmentedControl";
 import { useTextGenerationChatsStore } from "@/stores/userChats";
 import { useUserSettingsStore } from "@/stores/userSettings";
-import { ChatMessage, TextGenerationModel } from "@/types/chats";
+import { type ChatMessage, TextGenerationModel } from "@/types/chats";
 import { createOpenAIClient, generateTextWithOpenAI } from "@/utils/openai";
 
 export default function TextGenerationChats() {
@@ -41,9 +41,9 @@ export default function TextGenerationChats() {
                             { type: "text", text: chatMessage.text ?? "" },
                             ...(chatMessage.imageURL
                                 ? [{ type: "image_url", image_url: { url: chatMessage.imageURL } }]
-                                : [])
-                        ]
-                    }) as const
+                                : []),
+                        ],
+                    }) as const,
             ) ?? [];
 
         // @ts-expect-error TypeScript is complaining about missing `name` property which is not required
@@ -76,7 +76,7 @@ export default function TextGenerationChats() {
                         onValueChange={(value: string | number) => setChatModel(value as TextGenerationModel)}
                         segments={[
                             { label: "GPT-3.5", value: TextGenerationModel.GPT35TURBO },
-                            { label: "GPT-4o", value: TextGenerationModel.GPT4OMNI }
+                            { label: "GPT-4o", value: TextGenerationModel.GPT4OMNI },
                         ]}
                         disabled={!!activeChat}
                     />

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import ImagesMenu from "@/components/ImagesMenu/ImagesMenu";
 import ImageWindow from "@/components/ImageWindow/ImageWindow";
+import ImagesMenu from "@/components/ImagesMenu/ImagesMenu";
 import { useUserSettingsStore } from "@/stores/userSettings";
 import { ImageGenerationAspectRatio, ImageGenerationQuality } from "@/types/chats";
 import { createOpenAIClient, generateImagesWithOpenAI } from "@/utils/openai";
@@ -9,7 +9,7 @@ import { createOpenAIClient, generateImagesWithOpenAI } from "@/utils/openai";
 export default function ImageGenerationScreen() {
     const [imageQuality, setImageQuality] = useState<ImageGenerationQuality>(ImageGenerationQuality.STANDARD);
     const [imageAspectRatio, setImageAspectRatio] = useState<ImageGenerationAspectRatio>(
-        ImageGenerationAspectRatio.SQUARE
+        ImageGenerationAspectRatio.SQUARE,
     );
     const [numberOfImages, setNumberOfImages] = useState<number>(1);
 
@@ -23,7 +23,7 @@ export default function ImageGenerationScreen() {
             message,
             numberOfImages,
             imageQuality,
-            imageAspectRatio
+            imageAspectRatio,
         );
 
         return openAIImages;

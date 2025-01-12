@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 
 import MessageInput from "@/components/MessageInput/MessageInput";
-import { ChatMessage, GenerationChat, TextGenerationChat, TextGenerationModel } from "@/types/chats";
+import { type ChatMessage, type GenerationChat, type TextGenerationChat, TextGenerationModel } from "@/types/chats";
 import { getChatTitleFromMessage } from "@/utils/chats";
 import { base64EncodeImage } from "@/utils/encode";
 
@@ -35,7 +35,7 @@ export default function ChatWindow({
     updateChat,
     getAIChatResponse,
     topLeftComponent,
-    setForceChatWindow
+    setForceChatWindow,
 }: ChatWindowProps) {
     const [waitingForResponse, setWaitingForResponse] = useState(false);
 
@@ -57,7 +57,7 @@ export default function ChatWindow({
 
             updateChat(chatId, {
                 ...activeChatLocal,
-                messages: messages
+                messages: messages,
             });
         } else {
             chatId = nanoid();
@@ -66,7 +66,7 @@ export default function ChatWindow({
                 id: chatId,
                 title: getChatTitleFromMessage(message),
                 model: chatModel,
-                messages: messages
+                messages: messages,
             };
 
             addChat(activeChatLocal);
@@ -81,7 +81,7 @@ export default function ChatWindow({
 
         updateChat(chatId, {
             ...activeChatLocal,
-            messages: [...messages, { text: openAITextResponse, userMessage: false }]
+            messages: [...messages, { text: openAITextResponse, userMessage: false }],
         });
 
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });

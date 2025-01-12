@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { FaKey } from "react-icons/fa6";
 import { IoCheckmarkCircle } from "react-icons/io5";
 

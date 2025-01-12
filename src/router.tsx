@@ -13,22 +13,22 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "*",
-                element: <NotFound />
+                element: <NotFound />,
             },
             {
                 index: true,
-                element: <TextGenerationChats />
+                element: <TextGenerationChats />,
             },
             {
                 path: "/images",
-                element: <ImageGenerationScreen />
+                element: <ImageGenerationScreen />,
             },
             {
                 path: "/settings",
-                element: <Settings />
-            }
-        ]
-    }
+                element: <Settings />,
+            },
+        ],
+    },
 ]);
 
 export default router;

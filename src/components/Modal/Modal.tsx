@@ -13,7 +13,7 @@ export default function Modal({
     actionButtonLabel,
     onActionButtonClick,
     triggerContent,
-    children
+    children,
 }: ModalProps) {
     const modalRef = useRef<HTMLDialogElement>(null);
 

@@ -19,7 +19,7 @@ export default function ImagesMenu({
     imageAspectRatio,
     setImageAspectRatio,
     numberOfImages,
-    setNumberOfImages
+    setNumberOfImages,
 }: ImagesMenuProps) {
     return (
         <SideMenu className={className}>
@@ -33,7 +33,7 @@ export default function ImagesMenu({
                             onValueChange={(value: number | string) => setImageQuality(value as ImageGenerationQuality)}
                             segments={[
                                 { label: "Standard", value: ImageGenerationQuality.STANDARD },
-                                { label: "HD", value: ImageGenerationQuality.HD }
+                                { label: "HD", value: ImageGenerationQuality.HD },
                             ]}
                         />
                     </div>
@@ -47,7 +47,7 @@ export default function ImagesMenu({
                             segments={[
                                 { label: "Square", value: ImageGenerationAspectRatio.SQUARE },
                                 { label: "Landscape", value: ImageGenerationAspectRatio.LANDSCAPE },
-                                { label: "Portrait", value: ImageGenerationAspectRatio.PORTRAIT }
+                                { label: "Portrait", value: ImageGenerationAspectRatio.PORTRAIT },
                             ]}
                         />
                     </div>
@@ -60,7 +60,7 @@ export default function ImagesMenu({
                                 { label: "1", value: 1 },
                                 { label: "2", value: 2 },
                                 { label: "3", value: 3 },
-                                { label: "4", value: 4 }
+                                { label: "4", value: 4 },
                             ]}
                         />
                     </div>
