@@ -63,7 +63,11 @@ export default function ImageWindow({ className, missingApiKey, generateImage }:
                             Describe the image you want to have generated
                         </span>
                     </div>
-                    <MessageInput showImageUpload={false} onFormSubmit={onFormSubmit} />
+                    <MessageInput
+                        showImageUpload={false}
+                        onFormSubmit={onFormSubmit}
+                        className="fixed w-1/2 bottom-6"
+                    />
                 </>
             )}
         </div>
