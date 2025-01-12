@@ -10,6 +10,7 @@ interface FormData {
 }
 
 interface MessageInputProps {
+    initialMessage?: string;
     showImageUpload?: boolean;
     allowImageUpload?: boolean;
     onFormSubmit?: (data: FormData) => Promise<void>;
@@ -17,12 +18,17 @@ interface MessageInputProps {
 }
 
 export default function MessageInput({
+    initialMessage = "",
     showImageUpload = false,
     allowImageUpload,
     onFormSubmit,
     className,
 }: MessageInputProps) {
-    const { register, handleSubmit, reset, resetField, watch } = useForm<FormData>();
+    const { register, handleSubmit, reset, resetField, watch } = useForm<FormData>({
+        defaultValues: {
+            message: initialMessage,
+        },
+    });
 
     const onSubmit = async (data: FormData) => {
         reset();

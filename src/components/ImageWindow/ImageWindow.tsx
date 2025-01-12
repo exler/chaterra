@@ -14,11 +14,14 @@ interface ImageWindowProps {
 
 export default function ImageWindow({ className, missingApiKey, generateImage }: ImageWindowProps) {
     const [isLoading, setIsLoading] = useState(false);
+
+    const [prevPrompt, setPrevPrompt] = useState<string>("");
     const [images, setImages] = useState<string[]>([]);
 
     const onFormSubmit = async ({ message }: { message: string }) => {
         setIsLoading(true);
 
+        setPrevPrompt(message);
         setImages(await generateImage(message));
 
         setIsLoading(false);
@@ -64,6 +67,7 @@ export default function ImageWindow({ className, missingApiKey, generateImage }:
                         </span>
                     </div>
                     <MessageInput
+                        initialMessage={prevPrompt}
                         showImageUpload={false}
                         onFormSubmit={onFormSubmit}
                         className="fixed w-1/2 bottom-6"
