@@ -10,6 +10,7 @@ interface ImagesMenuProps {
     setImageAspectRatio: (imageAspectRatio: ImageGenerationAspectRatio) => void;
     numberOfImages: number;
     setNumberOfImages: (numberOfImages: number) => void;
+    disabled?: boolean;
 }
 
 export default function ImagesMenu({
@@ -20,6 +21,7 @@ export default function ImagesMenu({
     setImageAspectRatio,
     numberOfImages,
     setNumberOfImages,
+    disabled,
 }: ImagesMenuProps) {
     return (
         <SideMenu className={className}>
@@ -35,6 +37,7 @@ export default function ImagesMenu({
                                 { label: "Standard", value: ImageGenerationQuality.STANDARD },
                                 { label: "HD", value: ImageGenerationQuality.HD },
                             ]}
+                            disabled={disabled}
                         />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -49,6 +52,7 @@ export default function ImagesMenu({
                                 { label: "Landscape", value: ImageGenerationAspectRatio.LANDSCAPE },
                                 { label: "Portrait", value: ImageGenerationAspectRatio.PORTRAIT },
                             ]}
+                            disabled={disabled}
                         />
                     </div>
                     <div className="flex flex-col gap-2">
@@ -62,6 +66,7 @@ export default function ImagesMenu({
                                 { label: "3", value: 3 },
                                 { label: "4", value: 4 },
                             ]}
+                            disabled={disabled}
                         />
                     </div>
                 </div>

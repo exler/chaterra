@@ -7,6 +7,8 @@ import { ImageGenerationAspectRatio, ImageGenerationQuality } from "@/types/chat
 import { createOpenAIClient, generateImagesWithOpenAI } from "@/utils/openai";
 
 export default function ImageGenerationScreen() {
+    const [isGenerating, setIsGenerating] = useState<boolean>(false);
+
     const [imageQuality, setImageQuality] = useState<ImageGenerationQuality>(ImageGenerationQuality.STANDARD);
     const [imageAspectRatio, setImageAspectRatio] = useState<ImageGenerationAspectRatio>(
         ImageGenerationAspectRatio.SQUARE,
@@ -39,8 +41,11 @@ export default function ImageGenerationScreen() {
                 setImageAspectRatio={setImageAspectRatio}
                 numberOfImages={numberOfImages}
                 setNumberOfImages={setNumberOfImages}
+                disabled={isGenerating}
             />
             <ImageWindow
+                isGenerating={isGenerating}
+                setIsGenerating={setIsGenerating}
                 className="col-span-4 mt-8 lg:mt-0"
                 missingApiKey={!openAIApiKey}
                 generateImage={generateImage}

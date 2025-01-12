@@ -7,29 +7,35 @@ import { twMerge } from "tailwind-merge";
 import MessageInput from "@/components/MessageInput/MessageInput";
 
 interface ImageWindowProps {
+    isGenerating: boolean;
+    setIsGenerating: (isGenerating: boolean) => void;
     className?: string;
     missingApiKey?: boolean;
     generateImage: (message: string) => Promise<string[]>;
 }
 
-export default function ImageWindow({ className, missingApiKey, generateImage }: ImageWindowProps) {
-    const [isLoading, setIsLoading] = useState(false);
-
+export default function ImageWindow({
+    isGenerating,
+    setIsGenerating,
+    className,
+    missingApiKey,
+    generateImage,
+}: ImageWindowProps) {
     const [prevPrompt, setPrevPrompt] = useState<string>("");
     const [images, setImages] = useState<string[]>([]);
 
     const onFormSubmit = async ({ message }: { message: string }) => {
-        setIsLoading(true);
+        setIsGenerating(true);
 
         setPrevPrompt(message);
         setImages(await generateImage(message));
 
-        setIsLoading(false);
+        setIsGenerating(false);
     };
 
     return (
         <div className={twMerge("flex flex-col items-center justify-center w-full pr-4 lg:px-4", className)}>
-            {isLoading ? (
+            {isGenerating ? (
                 <>
                     <span className="loading loading-ball loading-lg" />
                     <span className="font-bold text-lg text-center">Generating images...</span>
