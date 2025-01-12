@@ -1,6 +1,6 @@
 import "./global.css";
 
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 import MenuBar from "@/components/MenuBar/MenuBar";
 

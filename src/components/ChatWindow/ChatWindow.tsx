@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { useRef, useState } from "react";
 import { IoWarningOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { twMerge } from "tailwind-merge";
 
 import MessageInput from "@/components/MessageInput/MessageInput";

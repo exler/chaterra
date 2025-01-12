@@ -1,6 +1,6 @@
 import { BsChatLeftDots } from "react-icons/bs";
 import { FaCircleQuestion, FaGears, FaGithub, FaImage } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import Modal from "@/components/Modal/Modal";
 
