@@ -7,8 +7,8 @@ interface ChatMessageContainerProps {
 
 export default function ChatMessageContainer({ className, children }: ChatMessageContainerProps) {
     return (
-        <div className={twMerge("chat w-fit max-w-xl", className)}>
-            <div className="chat-bubble flex flex-col gap-4">{children}</div>
+        <div className={twMerge("chat w-full max-w-xl", className)}>
+            <div className="chat-bubble break-all whitespace-pre-wrap flex flex-col gap-4">{children}</div>
         </div>
     );
 }

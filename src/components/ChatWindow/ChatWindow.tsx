@@ -151,7 +151,7 @@ export default function ChatWindow({
                                         <img src={chatMessage.imageURL} width="256" height="256" alt="" />
                                     </figure>
                                 )}
-                                <p className="whitespace-pre-wrap break-all">{chatMessage.text}</p>
+                                <p>{chatMessage.text}</p>
                             </ChatMessageContainer>
                         ))}
                         {waitingForResponse && (
