@@ -76,6 +76,9 @@ export default function ChatWindow({
             setActiveChatId(chatId);
         }
 
+        // Scroll into view after sending the message
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+
         setWaitingForResponse(true);
 
         const openAITextResponse = await getAIChatResponse(messages);
@@ -87,6 +90,7 @@ export default function ChatWindow({
             messages: [...messages, { id: nanoid(), text: openAITextResponse, userMessage: false }],
         });
 
+        // Scroll into view after showing response
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     };
 
