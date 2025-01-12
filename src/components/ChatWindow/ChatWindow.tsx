@@ -137,7 +137,7 @@ export default function ChatWindow({
                                 </figure>
                             )}
 
-                            <p className="whitespace-pre-wrap">{chatMessage.text}</p>
+                            <p className="whitespace-pre-wrap break-all">{chatMessage.text}</p>
                         </ChatMessageContainer>
                     ))}
                     {waitingForResponse && (
