@@ -39,7 +39,18 @@ export default function ChatWindow({
 }: ChatWindowProps) {
     const [waitingForResponse, setWaitingForResponse] = useState(false);
 
-    const bottomRef = useRef<HTMLDivElement>(null);
+    // Reference to the scrollable container
+    const chatContainerRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        // Use requestAnimationFrame to ensure DOM has updated
+        requestAnimationFrame(() => {
+            if (chatContainerRef.current) {
+                const container = chatContainerRef.current;
+                container.scrollTop = container.scrollHeight;
+            }
+        });
+    };
 
     const onFormSubmit = async ({ message, imageList }: { message: string; imageList: FileList }) => {
         // Have to store this locally as the activeChat is hydrating
@@ -77,7 +88,7 @@ export default function ChatWindow({
         }
 
         // Scroll into view after sending the message
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        scrollToBottom();
 
         setWaitingForResponse(true);
 
@@ -85,13 +96,13 @@ export default function ChatWindow({
 
         setWaitingForResponse(false);
 
-        updateChat(chatId, {
+        await updateChat(chatId, {
             ...activeChatLocal,
             messages: [...messages, { id: nanoid(), text: openAITextResponse, userMessage: false }],
         });
 
         // Scroll into view after showing response
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        scrollToBottom();
     };
 
     return (
@@ -128,8 +139,8 @@ export default function ChatWindow({
             </div>
 
             <div className="flex-1 overflow-hidden">
-                <div className="h-full overflow-y-auto px-4">
-                    <div className="flex flex-col gap-4 lg:mx-8 pb-14">
+                <div className="h-full overflow-y-auto px-4" ref={chatContainerRef}>
+                    <div className="flex flex-col gap-4 lg:mx-8 pb-40">
                         {activeChat?.messages.map((chatMessage) => (
                             <ChatMessageContainer
                                 key={chatMessage.id}
@@ -148,7 +159,6 @@ export default function ChatWindow({
                                 <span className="loading loading-dots loading-md" />
                             </ChatMessageContainer>
                         )}
-                        <div ref={bottomRef} />
                     </div>
                 </div>
             </div>
