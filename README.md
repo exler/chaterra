@@ -26,24 +26,24 @@ $ git clone https://github.com/exler/chaterra
 2. Install dependencies
 
 ```term
-$ pnpm install
+$ bun install
 ```
 
 3. Run the development server
 
 ```term
-$ pnpm dev
+$ bun run dev
 ```
 
 4. Create a production build
 
 ```term
-$ pnpm build
+$ bun run build
 ```
 
 Optionally, you can preview it before deploying it to a remote server:
 ```term
-$ pnpm preview
+$ bun run preview
 ```
 
 ## License
